@@ -5,6 +5,15 @@
     <string name="error_invalid_number">Please enter valid mobile number.</string>
     <string name="error_empty_field">Please enter %1$s.</string>
     <string name="error_password_doesn_t_match">Password and Confirm password doesn\'t match.</string>
+    <string name="hint_full_name">Full Name</string>
+    <string name="hint_country_code">Country Code</string>
+    <string name="hint_mobile_number">Mobile Number</string>
+    <string name="hint_address_optional">Address (Optional)</string>
+    <string name="hint_address">Address</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="tv_sign_up">Sign Up</string>
+    <string name="tv_already_have_an_account"><![CDATA[Already have an account?]]></string>
+
 
     <string name="hint_enter_your_email_id">Email Id</string>
     <string name="hint_password">Password</string>
