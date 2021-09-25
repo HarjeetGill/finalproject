@@ -28,6 +28,7 @@ public class SignupViewModel extends AndroidViewModel {
     public MutableLiveData<String> errorMobileNumber = new MutableLiveData<String>("");
     public MutableLiveData<String> address = new MutableLiveData<String>("");
     public MutableLiveData<String> errorAddress = new MutableLiveData<String>("");
+    public MutableLiveData<String> userRole = new MutableLiveData<String>("");
     public SingleLiveEvent<SignUpModel> navigate = new SingleLiveEvent<SignUpModel>();
     public boolean isAllFieldsValid = true;
     public SignUpModel signUpModel = null;
@@ -45,7 +46,7 @@ public class SignupViewModel extends AndroidViewModel {
         isConfirmPasswordValid();
         if(isAllFieldsValid){
             signUpModel = new SignUpModel(
-                    fullName.getValue(), address.getValue(), password.getValue(), emailId.getValue(), "+1" + mobileNumber.getValue(), ""
+                    fullName.getValue(), address.getValue(), password.getValue(), emailId.getValue(), "+1" + mobileNumber.getValue(), "", userRole.getValue()
             );
             navigate.postValue(signUpModel);
         }

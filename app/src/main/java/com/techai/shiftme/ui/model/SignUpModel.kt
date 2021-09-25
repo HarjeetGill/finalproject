@@ -11,4 +11,5 @@ data class SignUpModel(
     val emailId: String = "",
     val phoneNumber: String = "",
     var firebaseId: String = "",
-): Parcelable
+    var userRole: String = ""
+) : Parcelable

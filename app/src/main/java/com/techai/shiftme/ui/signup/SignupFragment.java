@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,6 +63,21 @@ public class SignupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(binding.getRoot()).popBackStack();
+            }
+        });
+
+
+        binding.spinnerUserRole.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View arg1, int arg2, long arg3) {
+                String selectedRole = binding.spinnerUserRole.getSelectedItem().toString();
+                viewModel.userRole.setValue(selectedRole);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
             }
         });
 
