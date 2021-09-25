@@ -48,7 +48,6 @@ public class LoginFragment extends Fragment {
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(this, new LoginViewModelFactory(getActivity().getApplication())).get(LoginViewModel.class);
-//        viewModel = new ViewModelProvider(this, new ViewModelFactory(getActivity().getApplication())).get(LoginViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setVariable(BR.viewModel, viewModel);
         return binding.getRoot();
@@ -151,7 +150,7 @@ public class LoginFragment extends Fragment {
                                 Bundle bundle = new Bundle();
                                 bundle.putParcelable(Constants.SIGN_UP_MODEL, signUpModel);
                                 bundle.putBoolean(Constants.IS_FORGOT_PASSWORD, true);
-//                                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_verifyOtpFragment, bundle);
+                                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_verifyOtpFragment, bundle);
                             } else {
                                 ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "User doesn't exist.");
                             }
