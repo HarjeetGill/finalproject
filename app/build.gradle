@@ -34,10 +34,10 @@ android {
         jvmTarget = '1.8'
     }
     viewBinding {
-        enabled=true
+        enabled = true
     }
     dataBinding {
-        enabled=true
+        enabled = true
     }
 }
 
@@ -99,8 +99,5 @@ dependencies {
 
     // Datastore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
-
-    // OTP
-    implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.2'
 
 }

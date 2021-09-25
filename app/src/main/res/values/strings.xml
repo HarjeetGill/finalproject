@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ShiftMe</string>
+
+    <string name="error_empty_number">Please enter mobile number.</string>
+    <string name="error_invalid_number">Please enter valid mobile number.</string>
+    <string name="error_empty_field">Please enter %1$s.</string>
+    <string name="error_password_doesn_t_match">Password and Confirm password doesn\'t match.</string>
+
+
 </resources>
