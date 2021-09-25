@@ -6,7 +6,12 @@ import android.view.WindowManager;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.techai.shiftme.ui.model.SignUpModel;
+
 public class AuthenticationActivity extends AppCompatActivity {
+
+    private SignUpModel signUpModel;
+    private Boolean isFromHome;
 
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -15,4 +20,18 @@ public class AuthenticationActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_auth);
     }
+
+    public void setChangePassword(SignUpModel signUpData, Boolean fromHome){
+        signUpModel = signUpData;
+        isFromHome = fromHome;
+    }
+
+    public SignUpModel getSignUpData(){
+        return signUpModel;
+    }
+
+    public Boolean getFromHome(){
+        return isFromHome;
+    }
+
 }

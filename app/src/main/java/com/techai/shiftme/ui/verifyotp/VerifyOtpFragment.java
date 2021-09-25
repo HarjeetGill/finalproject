@@ -32,10 +32,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mukesh.OnOtpCompletionListener;
+import com.techai.shiftme.AuthenticationActivity;
 import com.techai.shiftme.MainActivity;
 import com.techai.shiftme.R;
 import com.techai.shiftme.databinding.FragmentVerifyOtpBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
+import com.techai.shiftme.ui.changepassword.ChangePasswordFragment;
 import com.techai.shiftme.ui.model.SignUpModel;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
@@ -155,7 +157,7 @@ public class VerifyOtpFragment extends Fragment {
                     // Invalid request
                 } else if (e instanceof FirebaseTooManyRequestsException) {
                     // The SMS quota for the project has been exceeded
-                }else {
+                } else {
                     e.printStackTrace();
                 }
             }
@@ -251,7 +253,14 @@ public class VerifyOtpFragment extends Fragment {
                                 if (isFromHome) {
                                     bundle.putBoolean(Constants.FROM_HOME, isFromHome);
                                 }
-                                Navigation.findNavController(requireView()).navigate(R.id.action_verifyOtpFragment_to_changePasswordFragment, bundle);
+                                if (requireActivity() instanceof AuthenticationActivity) {
+                                    ((AuthenticationActivity) requireActivity()).setChangePassword(signUpModel, isFromHome);
+                                }
+                                Navigation.findNavController(requireView())
+                                        .popBackStack();
+                                Navigation.findNavController(requireView())
+                                        .navigate(R.id.changePasswordFragment, bundle);
+
                             } else {
                                 saveUser(signUpModel);
                             }

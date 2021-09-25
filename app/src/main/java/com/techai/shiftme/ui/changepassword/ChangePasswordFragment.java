@@ -51,16 +51,24 @@ public class ChangePasswordFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        signUpModel = getArguments().getParcelable(Constants.SIGN_UP_MODEL);
+        if (requireActivity() instanceof AuthenticationActivity) {
+            signUpModel = ((AuthenticationActivity) requireActivity()).getSignUpData();
+        }
 
-        if(signUpModel != null){
+//        signUpModel = getArguments().getParcelable(Constants.SIGN_UP_MODEL);
+
+        if (signUpModel != null) {
             firebaseUserId = signUpModel.getFirebaseId();
         }
 
-        fromHome = getArguments().getBoolean(Constants.FROM_HOME);
+        if (requireActivity() instanceof AuthenticationActivity) {
+            fromHome = ((AuthenticationActivity) requireActivity()).getFromHome();
+        }
 
-        if(fromHome){
-            firebaseUserId = SharedPrefUtils.getStringData(requireContext(),Constants.FIREBASE_ID);
+//        fromHome = getArguments().getBoolean(Constants.FROM_HOME);
+
+        if (fromHome) {
+            firebaseUserId = SharedPrefUtils.getStringData(requireContext(), Constants.FIREBASE_ID);
         }
 
         db = FirebaseFirestore.getInstance();
@@ -68,7 +76,7 @@ public class ChangePasswordFragment extends Fragment {
         viewModel.newPassword.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                if(s != null && !s.isEmpty()){
+                if (s != null && !s.isEmpty()) {
                     setNewPassword(s, firebaseUserId);
                 }
             }
@@ -76,7 +84,7 @@ public class ChangePasswordFragment extends Fragment {
 
     }
 
-    private void setNewPassword(String pwd, String firebaseId){
+    private void setNewPassword(String pwd, String firebaseId) {
         AppProgressUtil.INSTANCE.showOldProgressDialog(requireContext());
         collectionRef = db.collection(Constants.USERS);
         collectionRef
@@ -86,12 +94,12 @@ public class ChangePasswordFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         AppProgressUtil.INSTANCE.closeOldProgressDialog();
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Password changed in successfully");
                             SharedPrefUtils.saveData(requireContext(), Constants.IS_LOGGED_IN, true);
                             SharedPrefUtils.saveData(requireContext(), Constants.FIREBASE_ID, signUpModel.getFirebaseId());
                             startActivity(new Intent(requireContext(), MainActivity.class));
-                            if(requireActivity() instanceof AuthenticationActivity){
+                            if (requireActivity() instanceof AuthenticationActivity) {
                                 requireActivity().finish();
                             }
                         } else {

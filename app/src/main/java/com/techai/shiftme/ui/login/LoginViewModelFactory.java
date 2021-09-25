@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.techai.shiftme.ui.changepassword.ChangePasswordViewModel;
+import com.techai.shiftme.ui.signup.SignupViewModel;
+
 import org.jetbrains.annotations.NotNull;
 
 public class LoginViewModelFactory extends ViewModelProvider.NewInstanceFactory {
@@ -26,20 +29,20 @@ public class LoginViewModelFactory extends ViewModelProvider.NewInstanceFactory 
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else if (modelClass == SignupViewModel.class) {
+            try {
+                return (T) new SignupViewModel(application);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (modelClass == ChangePasswordViewModel.class) {
+            try {
+                return (T) new ChangePasswordViewModel(application);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-//        } else if (modelClass == SignupViewModel.class) {
-//            try {
-//                return (T) new SignupViewModel(application);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        } else if (modelClass == ChangePasswordViewModel.class) {
-//            try {
-//                return (T) new ChangePasswordViewModel(application);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        } else if (modelClass == UserProfileViewModel.class) {
+//        else if (modelClass == UserProfileViewModel.class) {
 //            try {
 //                return (T) new UserProfileViewModel(application);
 //            } catch (Exception e) {
