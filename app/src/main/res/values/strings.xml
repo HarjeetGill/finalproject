@@ -20,6 +20,8 @@
     <string name="tv_login">Login</string>
     <string name="tv_don_t_have_an_account"><![CDATA[Don\'t have an account?]]></string>
     <string name="tv_forgot_password">Forgot Password?</string>
+    <string name="tv_change_password">Change Password</string>
+    <string name="tv_save">Save</string>
 
     <string-array name="userRoles">
         <item>Customer</item>

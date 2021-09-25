@@ -155,6 +155,8 @@ public class VerifyOtpFragment extends Fragment {
                     // Invalid request
                 } else if (e instanceof FirebaseTooManyRequestsException) {
                     // The SMS quota for the project has been exceeded
+                }else {
+                    e.printStackTrace();
                 }
             }
 
