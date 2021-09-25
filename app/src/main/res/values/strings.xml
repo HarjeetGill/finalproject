@@ -33,4 +33,6 @@
     <string name="tv_otp_sent_msg">Please type the verification code sent to your registered mobile number.</string>
     <string name="tv_otp_resend_msg"><![CDATA[Didn\'t receive the code?: ]]> %1$s</string>
 
+    <string name="tv_home_fragment">Home Fragment</string>
+
 </resources>
