@@ -12,4 +12,11 @@
     <string name="tv_don_t_have_an_account"><![CDATA[Don\'t have an account?]]></string>
     <string name="tv_forgot_password">Forgot Password?</string>
 
+    <string name="tv_resend">Resend</string>
+    <string name="tv_cancel">Cancel</string>
+
+    <string name="tv_verify_otp">Verify OTP</string>
+    <string name="tv_otp_sent_msg">Please type the verification code sent to your registered mobile number.</string>
+    <string name="tv_otp_resend_msg"><![CDATA[Didn\'t receive the code?: ]]> %1$s</string>
+
 </resources>

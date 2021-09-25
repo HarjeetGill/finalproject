@@ -18,6 +18,17 @@
     <fragment
         android:id="@+id/verifyOtpFragment"
         android:name="com.techai.shiftme.ui.verifyotp.VerifyOtpFragment"
-        android:label="VerifyOtpFragment" />
+        android:label="VerifyOtpFragment">
+
+        <action
+            android:id="@+id/action_verifyOtpFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.techai.shiftme.ui.changepassword.ChangePasswordFragment"
+        android:label="ChangePasswordFragment" />
 
 </navigation>
