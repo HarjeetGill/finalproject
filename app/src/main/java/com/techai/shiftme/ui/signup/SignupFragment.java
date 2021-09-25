@@ -18,6 +18,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.techai.shiftme.BR;
+import com.techai.shiftme.R;
 import com.techai.shiftme.databinding.FragmentSignUpBinding;
 import com.techai.shiftme.ui.model.SignUpModel;
 import com.techai.shiftme.utils.AppProgressUtil;
@@ -93,7 +94,7 @@ public class SignupFragment extends Fragment {
                                                     } else{
                                                         Bundle bundle = new Bundle();
                                                         bundle.putParcelable(Constants.SIGN_UP_MODEL, signUpModel);
-                                                        //Navigation.findNavController(binding.getRoot()).navigate(R.id.action_signupFragment_to_verifyOtpFragment, bundle);
+                                                        Navigation.findNavController(binding.getRoot()).navigate(R.id.action_signupFragment_to_verifyOtpFragment, bundle);
                                                     }
                                                 } else {
                                                     ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Could not check if user exists. Probable reason: " + task.getException());
