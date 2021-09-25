@@ -6,4 +6,9 @@
     <color name="colorFontOne">#112031</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="colorBoxStroke">@color/black</color>
+    <color name="colorHint">@color/colorTwo</color>
+    <color name="colorText">@color/colorFontTwo</color>
+    <color name="colorTitle">@color/colorFontOne</color>
 </resources>
