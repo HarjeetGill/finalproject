@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -34,6 +36,7 @@ public class SignupFragment extends Fragment {
     private SignupViewModel viewModel;
     private CollectionReference collectionRef = null;
     private FirebaseFirestore db = null;
+    private String selectedRole;
 
     @Nullable
     @Override
@@ -54,7 +57,7 @@ public class SignupFragment extends Fragment {
         viewModel.navigate.observe(getViewLifecycleOwner(), new Observer<SignUpModel>() {
             @Override
             public void onChanged(SignUpModel signUpModel) {
-                if(signUpModel != null){
+                if (signUpModel != null) {
                     checkIfUserAlreadyExists(signUpModel);
                 }
             }
@@ -72,7 +75,10 @@ public class SignupFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View arg1, int arg2, long arg3) {
-                String selectedRole = binding.spinnerUserRole.getSelectedItem().toString();
+                selectedRole = binding.spinnerUserRole.getSelectedItem().toString();
+                if (arg1 instanceof TextView) {
+                    ((TextView) arg1).setTextColor(ContextCompat.getColor(requireContext(), R.color.colorText));
+                }
                 viewModel.userRole.setValue(selectedRole);
             }
 
@@ -84,7 +90,7 @@ public class SignupFragment extends Fragment {
 
     }
 
-    private void checkIfUserAlreadyExists(SignUpModel signUpModel){
+    private void checkIfUserAlreadyExists(SignUpModel signUpModel) {
         AppProgressUtil.INSTANCE.showOldProgressDialog(requireContext());
         collectionRef = db.collection(Constants.USERS);
         collectionRef
@@ -94,8 +100,8 @@ public class SignupFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         AppProgressUtil.INSTANCE.closeOldProgressDialog();
-                        if(task.isSuccessful()){
-                            if(task.getResult().size() >= 1){
+                        if (task.isSuccessful()) {
+                            if (task.getResult().size() >= 1) {
                                 ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "User already exists.");
                             } else {
                                 collectionRef
@@ -104,10 +110,10 @@ public class SignupFragment extends Fragment {
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                             @Override
                                             public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
-                                                if(task.isSuccessful()){
-                                                    if(task.getResult().size() >= 1){
+                                                if (task.isSuccessful()) {
+                                                    if (task.getResult().size() >= 1) {
                                                         ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "User already exists.");
-                                                    } else{
+                                                    } else {
                                                         Bundle bundle = new Bundle();
                                                         bundle.putParcelable(Constants.SIGN_UP_MODEL, signUpModel);
                                                         Navigation.findNavController(binding.getRoot()).navigate(R.id.action_signupFragment_to_verifyOtpFragment, bundle);
