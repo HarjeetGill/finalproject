@@ -21,6 +21,11 @@
     <string name="tv_don_t_have_an_account"><![CDATA[Don\'t have an account?]]></string>
     <string name="tv_forgot_password">Forgot Password?</string>
 
+    <string-array name="userRoles">
+        <item>Customer</item>
+        <item>Agency</item>
+    </string-array>
+
     <string name="tv_resend">Resend</string>
     <string name="tv_cancel">Cancel</string>
 

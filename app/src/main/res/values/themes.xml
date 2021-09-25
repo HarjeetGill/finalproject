@@ -15,6 +15,11 @@
     <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/colorBoxStroke</item>
         <item name="hintTextColor">@color/colorTwo</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxCornerRadiusBottomEnd">3dp</item>
+        <item name="boxCornerRadiusBottomStart">3dp</item>
+        <item name="boxCornerRadiusTopEnd">3dp</item>
+        <item name="boxCornerRadiusTopStart">3dp</item>
     </style>
 
     <style name="CustomTextInputLayout2" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
