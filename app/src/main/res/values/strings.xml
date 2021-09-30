@@ -46,5 +46,6 @@
 
     <string name="menu_profile">Profile</string>
     <string name="menu_send_request">Send Request</string>
+    <string name="tv_user_profile">User Profile</string>
 
 </resources>

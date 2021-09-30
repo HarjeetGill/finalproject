@@ -24,6 +24,7 @@ import com.techai.shiftme.BR;
 import com.techai.shiftme.R;
 import com.techai.shiftme.databinding.FragmentSignUpBinding;
 import com.techai.shiftme.data.model.SignUpModel;
+import com.techai.shiftme.preferences.SharedPrefUtils;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ToastUtils;
@@ -116,6 +117,7 @@ public class SignupFragment extends Fragment {
                                                     } else {
                                                         Bundle bundle = new Bundle();
                                                         bundle.putParcelable(Constants.SIGN_UP_MODEL, signUpModel);
+                                                        SharedPrefUtils.saveData(requireContext(), Constants.USER_ROLE, signUpModel.getUserRole());
                                                         Navigation.findNavController(binding.getRoot()).navigate(R.id.action_signupFragment_to_verifyOtpFragment, bundle);
                                                     }
                                                 } else {

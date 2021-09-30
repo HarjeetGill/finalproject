@@ -31,6 +31,12 @@ public final class Constants {
     public static final String FROM_HOME = "FROM_HOME";
     @NotNull
     public static final Constants INSTANCE;
+    @NotNull
+    public static final String USER_ROLE = "USER_ROLE";
+    @NotNull
+    public static final String CUSTOMER_USER_ROLE = "Customer";
+    @NotNull
+    public static final String AGENCY_USER_ROLE = "Agency";
 
     private Constants() {
     }

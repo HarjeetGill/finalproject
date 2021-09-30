@@ -22,6 +22,7 @@ import com.techai.shiftme.MainActivity;
 import com.techai.shiftme.databinding.FragmentChangePasswordBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
 import com.techai.shiftme.data.model.SignUpModel;
+import com.techai.shiftme.ui.auth.login.LoginViewModelFactory;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ToastUtils;

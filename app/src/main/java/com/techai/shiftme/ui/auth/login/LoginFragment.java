@@ -27,6 +27,7 @@ import com.techai.shiftme.databinding.FragmentLoginBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
 import com.techai.shiftme.data.model.LogInModel;
 import com.techai.shiftme.data.model.SignUpModel;
+import com.techai.shiftme.ui.customer.CustomerActivity;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ToastUtils;
@@ -107,7 +108,11 @@ public class LoginFragment extends Fragment {
                                                                 SharedPrefUtils.saveData(requireContext(), Constants.IS_LOGGED_IN, true);
                                                                 SharedPrefUtils.saveData(requireContext(), Constants.FIREBASE_ID, signUpModel.getFirebaseId());
                                                                 ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Logged in successfully");
-                                                                startActivity(new Intent(requireContext(), MainActivity.class));
+
+                                                                String userRole=SharedPrefUtils.getStringData(requireContext(),Constants.USER_ROLE);
+                                                                if(userRole.equals(Constants.CUSTOMER_USER_ROLE)){
+                                                                    startActivity(new Intent(requireContext(), CustomerActivity.class));
+                                                                }
                                                                 requireActivity().finish();
                                                             } else {
                                                                 ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Could not log in. Probable reason: " + task.getException());
