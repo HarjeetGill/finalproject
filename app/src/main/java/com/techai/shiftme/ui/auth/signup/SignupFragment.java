@@ -1,4 +1,4 @@
-package com.techai.shiftme.ui.signup;
+package com.techai.shiftme.ui.auth.signup;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,7 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.techai.shiftme.BR;
 import com.techai.shiftme.R;
 import com.techai.shiftme.databinding.FragmentSignUpBinding;
-import com.techai.shiftme.ui.model.SignUpModel;
+import com.techai.shiftme.data.model.SignUpModel;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ToastUtils;

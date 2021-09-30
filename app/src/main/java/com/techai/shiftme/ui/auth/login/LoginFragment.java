@@ -1,4 +1,4 @@
-package com.techai.shiftme.ui.login;
+package com.techai.shiftme.ui.auth.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,8 +25,8 @@ import com.techai.shiftme.R;
 import com.techai.shiftme.BR;
 import com.techai.shiftme.databinding.FragmentLoginBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
-import com.techai.shiftme.ui.model.LogInModel;
-import com.techai.shiftme.ui.model.SignUpModel;
+import com.techai.shiftme.data.model.LogInModel;
+import com.techai.shiftme.data.model.SignUpModel;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ToastUtils;

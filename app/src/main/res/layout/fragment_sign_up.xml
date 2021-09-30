@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.techai.shiftme.ui.signup.SignupViewModel" />
+            type="com.techai.shiftme.ui.auth.signup.SignupViewModel" />
     </data>
 
     <ScrollView

@@ -1,4 +1,4 @@
-package com.techai.shiftme.ui.model
+package com.techai.shiftme.data.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
