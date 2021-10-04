@@ -4,18 +4,6 @@ import org.jetbrains.annotations.NotNull;
 
 public final class Constants {
     @NotNull
-    public static final String NUTRIMENTS_INFO = "NUTRIMENTS_INFO";
-    @NotNull
-    public static final String NUTRIMENTS_INFO_LIST = "NUTRIMENTS_INFO_LIST";
-    @NotNull
-    public static final String FROM_WISHLIST = "FROM_WISHLIST";
-    @NotNull
-    public static final String PRODUCT_IMAGE = "PRODUCT_IMAGE";
-    @NotNull
-    public static final String PRODUCT_NAME = "PRODUCT_NAME";
-    @NotNull
-    public static final String WISHLIST = "wishlist";
-    @NotNull
     public static final String USERS = "users";
     @NotNull
     public static final String IS_LOGGED_IN = "IS_LOGGED_IN";

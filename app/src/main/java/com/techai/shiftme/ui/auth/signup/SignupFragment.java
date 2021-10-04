@@ -118,6 +118,7 @@ public class SignupFragment extends Fragment {
                                                         Bundle bundle = new Bundle();
                                                         bundle.putParcelable(Constants.SIGN_UP_MODEL, signUpModel);
                                                         SharedPrefUtils.saveData(requireContext(), Constants.USER_ROLE, signUpModel.getUserRole());
+                                                        SharedPrefUtils.saveObject(requireContext(), Constants.SIGN_UP_MODEL, signUpModel);
                                                         Navigation.findNavController(binding.getRoot()).navigate(R.id.action_signupFragment_to_verifyOtpFragment, bundle);
                                                     }
                                                 } else {

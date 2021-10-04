@@ -104,4 +104,6 @@ dependencies {
 
     // OTP
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.2'
+
+    implementation "com.hootsuite.android:nachos:1.1.1"
 }

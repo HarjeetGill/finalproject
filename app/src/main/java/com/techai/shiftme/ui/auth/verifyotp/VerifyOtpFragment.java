@@ -301,10 +301,10 @@ public class VerifyOtpFragment extends Fragment {
                                         if (task.isSuccessful()) {
                                             SharedPrefUtils.saveData(requireContext(), Constants.IS_LOGGED_IN, true);
                                             SharedPrefUtils.saveData(requireContext(), Constants.FIREBASE_ID, documentReference.getId());
+                                            SharedPrefUtils.saveObject(requireContext(), Constants.SIGN_UP_MODEL, signUpModel);
                                             ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Successfully logged in.");
 
-                                            String userRole=SharedPrefUtils.getStringData(requireContext(),Constants.USER_ROLE);
-                                            if(userRole.equals(Constants.CUSTOMER_USER_ROLE)){
+                                            if(signUpModel.getUserRole().equals(Constants.CUSTOMER_USER_ROLE)){
                                                 startActivity(new Intent(requireContext(), CustomerActivity.class));
                                             }
                                             requireActivity().finish();

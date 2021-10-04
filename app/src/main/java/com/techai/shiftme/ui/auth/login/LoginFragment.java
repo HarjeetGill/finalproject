@@ -107,10 +107,11 @@ public class LoginFragment extends Fragment {
                                                                 }
                                                                 SharedPrefUtils.saveData(requireContext(), Constants.IS_LOGGED_IN, true);
                                                                 SharedPrefUtils.saveData(requireContext(), Constants.FIREBASE_ID, signUpModel.getFirebaseId());
+                                                                SharedPrefUtils.saveObject(requireContext(), Constants.SIGN_UP_MODEL, signUpModel);
+
                                                                 ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Logged in successfully");
 
-                                                                String userRole=SharedPrefUtils.getStringData(requireContext(),Constants.USER_ROLE);
-                                                                if(userRole.equals(Constants.CUSTOMER_USER_ROLE)){
+                                                                if(signUpModel.getUserRole().equals(Constants.CUSTOMER_USER_ROLE)){
                                                                     startActivity(new Intent(requireContext(), CustomerActivity.class));
                                                                 }
                                                                 requireActivity().finish();
