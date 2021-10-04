@@ -1,4 +1,4 @@
-package com.techai.shiftme.ui.changepassword;
+package com.techai.shiftme.ui.auth.changepassword;
 
 import android.app.Application;
 import android.view.View;

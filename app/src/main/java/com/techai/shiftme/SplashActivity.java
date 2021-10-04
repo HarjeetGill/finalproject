@@ -9,7 +9,9 @@ import android.view.WindowManager;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.techai.shiftme.data.model.SignUpModel;
 import com.techai.shiftme.preferences.SharedPrefUtils;
+import com.techai.shiftme.ui.customer.CustomerActivity;
 import com.techai.shiftme.utils.Constants;
 
 public class SplashActivity extends AppCompatActivity {
@@ -25,7 +27,10 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (SharedPrefUtils.getBooleanData(SplashActivity.this, Constants.IS_LOGGED_IN)) {
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    SignUpModel signUpModel=SharedPrefUtils.getObject(SplashActivity.this,Constants.SIGN_UP_MODEL, SignUpModel.class);
+                    if(signUpModel.getUserRole().equals(Constants.CUSTOMER_USER_ROLE)){
+                        startActivity(new Intent(SplashActivity.this, CustomerActivity.class));
+                    }
                 } else {
                     startActivity(new Intent(SplashActivity.this, AuthenticationActivity.class));
                 }

@@ -1,4 +1,4 @@
-package com.techai.shiftme.ui.changepassword;
+package com.techai.shiftme.ui.auth.changepassword;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,8 +21,8 @@ import com.techai.shiftme.BR;
 import com.techai.shiftme.MainActivity;
 import com.techai.shiftme.databinding.FragmentChangePasswordBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
-import com.techai.shiftme.ui.login.LoginViewModelFactory;
-import com.techai.shiftme.ui.model.SignUpModel;
+import com.techai.shiftme.data.model.SignUpModel;
+import com.techai.shiftme.ui.auth.login.LoginViewModelFactory;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ToastUtils;

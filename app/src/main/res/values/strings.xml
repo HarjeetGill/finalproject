@@ -38,5 +38,23 @@
     <string name="tv_otp_resend_msg"><![CDATA[Didn\'t receive the code?: ]]> %1$s</string>
 
     <string name="tv_home_fragment">Home Fragment</string>
+    <string name="title_activity_customer">CustomerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_profile">Profile</string>
+    <string name="menu_send_request">Send Request</string>
+    <string name="tv_user_profile">User Profile</string>
+    <string name="tv_send_request">Send Request</string>
+    <string name="enter_items_hint">Enter Items</string>
+    <string name="tv_add_items">Add Items</string>
+    <string name="location_to_pick">Location to pick Items</string>
+    <string name="destination_location">Destination Location</string>
+    <string name="select_date">Select Date</string>
+    <string name="select_time">Select Time</string>
 
 </resources>

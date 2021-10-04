@@ -1,4 +1,4 @@
-package com.techai.shiftme.ui.login;
+package com.techai.shiftme.ui.auth.login;
 
 import android.app.Application;
 import android.view.View;
@@ -8,7 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.techai.shiftme.R;
-import com.techai.shiftme.ui.model.LogInModel;
+import com.techai.shiftme.data.model.LogInModel;
 import com.techai.shiftme.utils.SingleLiveEvent;
 import com.techai.shiftme.utils.ValidationUtils;
 

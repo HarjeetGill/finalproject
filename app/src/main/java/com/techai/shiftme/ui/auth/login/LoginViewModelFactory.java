@@ -1,4 +1,4 @@
-package com.techai.shiftme.ui.login;
+package com.techai.shiftme.ui.auth.login;
 
 import android.app.Application;
 

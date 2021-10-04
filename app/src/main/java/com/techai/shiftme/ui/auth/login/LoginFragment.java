@@ -1,4 +1,4 @@
-package com.techai.shiftme.ui.login;
+package com.techai.shiftme.ui.auth.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,8 +25,9 @@ import com.techai.shiftme.R;
 import com.techai.shiftme.BR;
 import com.techai.shiftme.databinding.FragmentLoginBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
-import com.techai.shiftme.ui.model.LogInModel;
-import com.techai.shiftme.ui.model.SignUpModel;
+import com.techai.shiftme.data.model.LogInModel;
+import com.techai.shiftme.data.model.SignUpModel;
+import com.techai.shiftme.ui.customer.CustomerActivity;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ToastUtils;
@@ -106,8 +107,13 @@ public class LoginFragment extends Fragment {
                                                                 }
                                                                 SharedPrefUtils.saveData(requireContext(), Constants.IS_LOGGED_IN, true);
                                                                 SharedPrefUtils.saveData(requireContext(), Constants.FIREBASE_ID, signUpModel.getFirebaseId());
+                                                                SharedPrefUtils.saveObject(requireContext(), Constants.SIGN_UP_MODEL, signUpModel);
+
                                                                 ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Logged in successfully");
-                                                                startActivity(new Intent(requireContext(), MainActivity.class));
+
+                                                                if(signUpModel.getUserRole().equals(Constants.CUSTOMER_USER_ROLE)){
+                                                                    startActivity(new Intent(requireContext(), CustomerActivity.class));
+                                                                }
                                                                 requireActivity().finish();
                                                             } else {
                                                                 ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Could not log in. Probable reason: " + task.getException());

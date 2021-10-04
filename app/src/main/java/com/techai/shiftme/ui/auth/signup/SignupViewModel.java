@@ -1,4 +1,4 @@
-package com.techai.shiftme.ui.signup;
+package com.techai.shiftme.ui.auth.signup;
 
 import android.app.Application;
 import android.view.View;
@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.techai.shiftme.ui.model.SignUpModel;
+import com.techai.shiftme.data.model.SignUpModel;
 import com.techai.shiftme.utils.SingleLiveEvent;
 import com.techai.shiftme.utils.ValidationUtils;
 

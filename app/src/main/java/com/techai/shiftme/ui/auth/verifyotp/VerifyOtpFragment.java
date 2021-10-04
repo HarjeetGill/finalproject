@@ -1,4 +1,4 @@
-package com.techai.shiftme.ui.verifyotp;
+package com.techai.shiftme.ui.auth.verifyotp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,10 +35,11 @@ import com.mukesh.OnOtpCompletionListener;
 import com.techai.shiftme.AuthenticationActivity;
 import com.techai.shiftme.MainActivity;
 import com.techai.shiftme.R;
+import com.techai.shiftme.SplashActivity;
 import com.techai.shiftme.databinding.FragmentVerifyOtpBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
-import com.techai.shiftme.ui.changepassword.ChangePasswordFragment;
-import com.techai.shiftme.ui.model.SignUpModel;
+import com.techai.shiftme.data.model.SignUpModel;
+import com.techai.shiftme.ui.customer.CustomerActivity;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ToastUtils;
@@ -300,8 +301,12 @@ public class VerifyOtpFragment extends Fragment {
                                         if (task.isSuccessful()) {
                                             SharedPrefUtils.saveData(requireContext(), Constants.IS_LOGGED_IN, true);
                                             SharedPrefUtils.saveData(requireContext(), Constants.FIREBASE_ID, documentReference.getId());
+                                            SharedPrefUtils.saveObject(requireContext(), Constants.SIGN_UP_MODEL, signUpModel);
                                             ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Successfully logged in.");
-                                            startActivity(new Intent(requireContext(), MainActivity.class));
+
+                                            if(signUpModel.getUserRole().equals(Constants.CUSTOMER_USER_ROLE)){
+                                                startActivity(new Intent(requireContext(), CustomerActivity.class));
+                                            }
                                             requireActivity().finish();
                                         } else {
                                             ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, String.valueOf(task.getException()));

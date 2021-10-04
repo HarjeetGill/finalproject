@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.techai.shiftme.ui.login.LoginFragment"
+        android:name="com.techai.shiftme.ui.auth.login.LoginFragment"
         android:label="LoginFragment">
 
         <action
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.techai.shiftme.ui.signup.SignupFragment"
+        android:name="com.techai.shiftme.ui.auth.signup.SignupFragment"
         android:label="SignupFragment">
 
         <action
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/verifyOtpFragment"
-        android:name="com.techai.shiftme.ui.verifyotp.VerifyOtpFragment"
+        android:name="com.techai.shiftme.ui.auth.verifyotp.VerifyOtpFragment"
         android:label="VerifyOtpFragment">
 
         <action
@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/changePasswordFragment"
-        android:name="com.techai.shiftme.ui.changepassword.ChangePasswordFragment"
+        android:name="com.techai.shiftme.ui.auth.changepassword.ChangePasswordFragment"
         android:label="ChangePasswordFragment" />
 
 </navigation>

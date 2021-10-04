@@ -3,6 +3,11 @@ package com.techai.shiftme.preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
 public class SharedPrefUtils {
 
     private static final String PREF_APP = "pref_app";
@@ -45,6 +50,21 @@ public class SharedPrefUtils {
     // Get Data
     static public String getStringData(Context context, String key) {
         return context.getSharedPreferences(PREF_APP, Context.MODE_PRIVATE).getString(key, null);
+    }
+
+    // Save Data
+    static public void saveObject(Context context, String key, Object clsObj) {
+        //convert object  to string json
+        String jsonSender = new Gson().toJson(clsObj, new TypeToken<Object>() {
+        }.getType());
+        context.getSharedPreferences(PREF_APP, Context.MODE_PRIVATE).edit().putString(key, jsonSender).apply();
+    }
+
+    // Get Data
+    static public <T> T getObject(Context context, String key, Class<T> classOfT) {
+        String jsonSender = getStringData(context, key);
+        //convert object  to string json
+        return new Gson().fromJson(jsonSender, (Type) classOfT);
     }
 
     /**

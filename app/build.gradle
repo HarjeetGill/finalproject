@@ -33,16 +33,18 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    viewBinding {
-        enabled = true
-    }
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        viewBinding true
+        dataBinding true
     }
 }
 
 dependencies {
 
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation 'androidx.navigation:navigation-fragment:2.3.5'
+    implementation 'androidx.navigation:navigation-ui:2.3.5'
     def nav_version = "2.3.5"
     def material_dialog_version = "3.3.0"
 
@@ -102,4 +104,6 @@ dependencies {
 
     // OTP
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.2'
+
+    implementation "com.hootsuite.android:nachos:1.1.1"
 }
