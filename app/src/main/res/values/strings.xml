@@ -13,6 +13,8 @@
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="tv_sign_up">Sign Up</string>
     <string name="tv_already_have_an_account"><![CDATA[Already have an account?]]></string>
+    <string name="hint_user_role">User Role</string>
+    <string name="tv_user_profile">User Profile</string>
 
 
     <string name="hint_enter_your_email_id">Email Id</string>

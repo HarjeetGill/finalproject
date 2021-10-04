@@ -7,6 +7,14 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.techai.shiftme.ui.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment">
+        <action
+            android:id="@+id/action_homeFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.techai.shiftme.ui.userprofile.UserProfileFragment"
+        android:label="UserProfileFragment" />
 
 </navigation>

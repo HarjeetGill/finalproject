@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.techai.shiftme.ui.changepassword.ChangePasswordViewModel;
 import com.techai.shiftme.ui.signup.SignupViewModel;
+import com.techai.shiftme.ui.userprofile.UserProfileViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -42,13 +43,13 @@ public class LoginViewModelFactory extends ViewModelProvider.NewInstanceFactory 
                 e.printStackTrace();
             }
         }
-//        else if (modelClass == UserProfileViewModel.class) {
-//            try {
-//                return (T) new UserProfileViewModel(application);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
+        else if (modelClass == UserProfileViewModel.class) {
+            try {
+                return (T) new UserProfileViewModel(application);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 
