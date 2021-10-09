@@ -1,19 +1,21 @@
 package com.techai.shiftme.ui.customer.sendrequest;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SendRequestViewModel extends ViewModel {
+public class SendRequestViewModel extends AndroidViewModel {
 
-    private MutableLiveData<String> mText;
-
-    public SendRequestViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is send request fragment");
+    public SendRequestViewModel(@NonNull Application application) {
+        super(application);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public void onAddItem(){
+
     }
+
 }

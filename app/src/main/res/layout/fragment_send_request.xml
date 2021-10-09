@@ -1,188 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:layout_margin="@dimen/_8sdp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.techai.shiftme.ui.customer.sendrequest.SendRequestViewModel" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/white"
-        >
+        android:layout_margin="@dimen/_8sdp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvAddItems"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tv_add_items"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/_16ssp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilAddItems"
-            style="@style/CustomTextInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            app:errorEnabled="false"
-            app:errorIconDrawable="@null"
-            app:startIconDrawable="@drawable/ic_location"
-            app:layout_constraintEnd_toStartOf="@+id/ivAdd"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvAddItems">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etAddItems"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/_10sdp"
-                android:hint="@string/enter_items_hint"
-                android:inputType="text"
-                android:enabled="true"
-                android:textColor="@color/colorText"
-                android:textColorHint="@color/colorHint"
-                android:textCursorDrawable="@null" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageView
-            android:id="@+id/ivAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:src="@drawable/ic_add"
-            app:tint="@color/black"
-            android:padding="@dimen/_5sdp"
-            android:layout_margin="@dimen/_5sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tilAddItems"
-            app:layout_constraintBottom_toBottomOf="@id/tilAddItems"
-            />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilPicLocation"
-            style="@style/CustomTextInputLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:errorEnabled="false"
-            app:errorIconDrawable="@null"
-            app:startIconDrawable="@drawable/ic_location"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tilAddItems">
+            android:background="@color/white">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPicLocation"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAddItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_add_items"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilAddItems"
+                style="@style/CustomTextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                app:errorEnabled="false"
+                app:errorIconDrawable="@null"
+                app:startIconDrawable="@drawable/ic_location"
+                app:layout_constraintEnd_toStartOf="@+id/ivAdd"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddItems">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etAddItems"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="true"
+                    android:hint="@string/enter_items_hint"
+                    android:inputType="text"
+                    android:textColor="@color/colorText"
+                    android:textColorHint="@color/colorHint" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/ivAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:src="@drawable/ic_add"
+                app:tint="@color/black"
+                android:padding="@dimen/_5sdp"
+                android:layout_margin="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tilAddItems"
+                app:layout_constraintBottom_toBottomOf="@id/tilAddItems" />
+
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/_10sdp"
-                android:hint="@string/location_to_pick"
-                android:inputType="text"
-                android:enabled="true"
-                android:textColor="@color/colorText"
-                android:textColorHint="@color/colorHint"
-                android:textCursorDrawable="@null" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:id="@+id/rvItems"
+                tools:itemCount="5"
+                android:layout_marginTop="@dimen/_8sdp"
+                tools:listitem="@layout/item_added"
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@+id/tilAddItems" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilDestination"
-            style="@style/CustomTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:errorEnabled="false"
-            app:errorIconDrawable="@null"
-            app:startIconDrawable="@drawable/ic_location"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tilPicLocation">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etDestinationLocation"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPicLocation"
+                style="@style/CustomTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/_10sdp"
-                android:hint="@string/destination_location"
-                android:inputType="text"
-                android:enabled="true"
-                android:textColor="@color/colorText"
-                android:textColorHint="@color/colorHint"
-                android:textCursorDrawable="@null" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="@dimen/_8sdp"
+                app:errorEnabled="false"
+                app:errorIconDrawable="@null"
+                app:startIconDrawable="@drawable/ic_location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvItems">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilDate"
-            style="@style/CustomTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:errorEnabled="false"
-            app:errorIconDrawable="@null"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tilDestination">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPicLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/location_to_pick"
+                    android:inputType="text"
+                    android:enabled="true"
+                    android:textColor="@color/colorText"
+                    android:textColorHint="@color/colorHint" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etDate"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilDestination"
+                style="@style/CustomTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/_10sdp"
-                android:hint="@string/select_date"
-                android:inputType="text"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:enabled="true"
-                android:textColor="@color/colorText"
-                android:textColorHint="@color/colorHint"
-                android:textCursorDrawable="@null" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="@dimen/_8sdp"
+                app:errorEnabled="false"
+                app:errorIconDrawable="@null"
+                app:startIconDrawable="@drawable/ic_location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilPicLocation">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilTime"
-            style="@style/CustomTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:errorEnabled="false"
-            app:errorIconDrawable="@null"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tilDate">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDestinationLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/destination_location"
+                    android:inputType="text"
+                    android:enabled="true"
+                    android:textColor="@color/colorText"
+                    android:textColorHint="@color/colorHint" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etTime"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilDate"
+                style="@style/CustomTextInputLayout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/_10sdp"
-                android:hint="@string/select_time"
-                android:inputType="text"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:enabled="true"
-                android:textColor="@color/colorText"
-                android:textColorHint="@color/colorHint"
-                android:textCursorDrawable="@null" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="@dimen/_8sdp"
+                app:errorEnabled="false"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/tilTime"
+                app:errorIconDrawable="@null"
+                app:startIconDrawable="@drawable/ic_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilDestination">
 
-        <Button
-            android:id="@+id/btnSendRequest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorTwo"
-            android:text="@string/tv_send_request"
-            android:textColor="@color/white"
-            android:layout_marginTop="@dimen/_16sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tilTime" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/select_date"
+                    android:inputType="text"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:enabled="true"
+                    android:textColor="@color/colorText"
+                    android:textColorHint="@color/colorHint" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-</ScrollView>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilTime"
+                style="@style/CustomTextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:errorEnabled="false"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@+id/tilDate"
+                app:errorIconDrawable="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilDestination"
+                app:startIconDrawable="@drawable/ic_time">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/select_time"
+                    android:inputType="text"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:enabled="true"
+                    android:textColor="@color/colorText"
+                    android:textColorHint="@color/colorHint" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/vehicleSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/bg_rounded_stroke"
+                android:entries="@array/vehicle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilTime" />
+
+            <Button
+                android:id="@+id/btnSendRequest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_send_request"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/_16sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vehicleSpinner" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

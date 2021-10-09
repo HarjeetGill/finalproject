@@ -1,21 +1,21 @@
 package com.techai.shiftme.ui.customer;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.Menu;
+import android.view.WindowManager;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.navigation.NavigationView;
 import com.techai.shiftme.R;
 import com.techai.shiftme.databinding.ActivityCustomerBinding;
+import com.techai.shiftme.databinding.NavHeaderCustomerBinding;
 
 public class CustomerActivity extends AppCompatActivity {
 
@@ -25,6 +25,7 @@ public class CustomerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         binding = ActivityCustomerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
