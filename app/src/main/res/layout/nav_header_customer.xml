@@ -7,6 +7,7 @@
     android:backgroundTint="@color/white"
     android:gravity="bottom"
     android:orientation="vertical"
+    android:id="@+id/llMain"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
@@ -21,7 +22,7 @@
         android:id="@+id/tvName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_8sdp"
+        android:padding="@dimen/_5sdp"
         android:text="@string/nav_header_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/colorText" />
@@ -30,7 +31,7 @@
         android:id="@+id/tvEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_8sdp"
+        android:padding="@dimen/_5sdp"
         android:text="@string/nav_header_subtitle"
         android:textColor="@color/colorText" />
 

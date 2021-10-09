@@ -8,7 +8,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.techai.shiftme.R;
+import com.techai.shiftme.SplashActivity;
 import com.techai.shiftme.data.model.SignUpModel;
+import com.techai.shiftme.preferences.SharedPrefUtils;
+import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.SingleLiveEvent;
 import com.techai.shiftme.utils.ValidationUtils;
 
@@ -29,43 +32,48 @@ public class UserProfileViewModel extends AndroidViewModel {
     public SingleLiveEvent<SignUpModel> navigate = new SingleLiveEvent<SignUpModel>();
     public boolean isAllFieldsValid = true;
     public SignUpModel signUpModel = null;
+    public SignUpModel tempSignUpModel = null;
 
     public UserProfileViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public void setData(SignUpModel signUpModel){
+    public void setData(SignUpModel signUpModel) {
+        tempSignUpModel = signUpModel;
         emailId.postValue(signUpModel.getEmailId());
         fullName.postValue(signUpModel.getFullName());
         mobileNumber.postValue(signUpModel.getPhoneNumber().substring(2));
+        userRole.postValue(signUpModel.getUserRole());
         address.postValue(signUpModel.getAddress());
     }
 
-    public void onClick(View view){
-        if(view.getId() == R.id.btnSave){
+    public void onClick(View view) {
+        if (view.getId() == R.id.btnSave) {
             isAllFieldsValid = true;
             isMobileNumberValid();
             isEmailValid();
             isFullNameValid();
-            if(isAllFieldsValid){
+            if (isAllFieldsValid) {
                 isEnabled.postValue(false);
                 signUpModel = new SignUpModel(
-                        fullName.getValue(), address.getValue(), "", emailId.getValue(), "+1" + mobileNumber.getValue(), "", ""
+                        fullName.getValue(), address.getValue(), "", emailId.getValue(), "+1" + mobileNumber.getValue(), tempSignUpModel.getFirebaseId(), userRole.getValue()
                 );
                 navigate.postValue(signUpModel);
-            }
-        } else if(view.getId() == R.id.ivEdit){
-            if(isEnabled.getValue()){
-                isEnabled.postValue(false);
-            } else {
-                isEnabled.postValue(true);
             }
         }
     }
 
-    private void isEmailValid(){
+    public void isEditIcon(Boolean bool) {
+        if (bool) {
+            isEnabled.postValue(false);
+        } else {
+            isEnabled.postValue(true);
+        }
+    }
+
+    private void isEmailValid() {
         Pair<Boolean, Integer> result = ValidationUtils.isFieldValid(emailId.getValue());
-        if(result.getFirst()){
+        if (result.getFirst()) {
             errorEmailId.postValue("");
         } else {
             isAllFieldsValid = false;
@@ -73,9 +81,9 @@ public class UserProfileViewModel extends AndroidViewModel {
         }
     }
 
-    private void isMobileNumberValid(){
+    private void isMobileNumberValid() {
         Pair<Boolean, Integer> result = ValidationUtils.isMobileNumberValid(mobileNumber.getValue());
-        if(result.getFirst()){
+        if (result.getFirst()) {
             errorMobileNumber.postValue("");
         } else {
             isAllFieldsValid = false;
@@ -83,9 +91,9 @@ public class UserProfileViewModel extends AndroidViewModel {
         }
     }
 
-    private void isFullNameValid(){
+    private void isFullNameValid() {
         Pair<Boolean, Integer> result = ValidationUtils.isFieldValid(mobileNumber.getValue());
-        if(result.getFirst()){
+        if (result.getFirst()) {
             errorFullName.postValue("");
         } else {
             isAllFieldsValid = false;

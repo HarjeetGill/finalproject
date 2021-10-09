@@ -9,12 +9,16 @@
         android:id="@+id/nav_send_request"
         android:name="com.techai.shiftme.ui.customer.sendrequest.SendRequestFragment"
         android:label="@string/menu_send_request"
-        tools:layout="@layout/fragment_send_request" />
+        tools:layout="@layout/fragment_send_request" >
+        <action
+            android:id="@+id/action_nav_send_request_to_nav_profile"
+            app:destination="@id/nav_profile" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.techai.shiftme.ui.customer.profile.ProfileFragment"
+        android:name="com.techai.shiftme.ui.userprofile.UserProfileFragment"
         android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_user_profile" />
 
 </navigation>

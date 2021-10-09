@@ -17,47 +17,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tvSignup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp"
-                android:fontFamily="@font/poppins_medium"
-                android:text="@string/tv_user_profile"
-                android:textColor="@color/colorText"
-                android:textSize="@dimen/_15ssp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/ivEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_edit"
-                android:padding="@dimen/_10sdp"
-                android:onClick="@{viewModel::onClick}"
-                app:layout_constraintTop_toTopOf="@id/tvSignup"
-                app:layout_constraintBottom_toBottomOf="@id/tvSignup"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="@dimen/_10sdp"
-                android:textColor="@color/colorText"
-                android:textStyle="bold"
-                app:tint="@color/colorText" />
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilFullName"
                 style="@style/CustomTextInputLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
+                android:enabled="@{viewModel.isEnabled}"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@null"
                 app:errorText="@{viewModel.errorFullName}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvSignup">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etFullName"
@@ -78,6 +50,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
+                android:enabled="@{viewModel.isEnabled}"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@null"
                 app:layout_constraintStart_toStartOf="parent"
@@ -105,6 +78,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
+                android:enabled="@{viewModel.isEnabled}"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@null"
                 app:errorText="@{viewModel.errorMobileNumber}"
@@ -132,6 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
+                android:enabled="@{viewModel.isEnabled}"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@null"
                 app:errorText="@{viewModel.errorEmailId}"
@@ -158,6 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
+                android:enabled="@{viewModel.isEnabled}"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@null"
                 app:errorText="@{viewModel.errorAddress}"
@@ -184,6 +160,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
+                android:enabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tilAddress">
@@ -210,7 +187,7 @@
                 android:onClick="@{viewModel::onClick}"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
-                android:text="@string/tv_sign_up"
+                android:text="@string/tv_save"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

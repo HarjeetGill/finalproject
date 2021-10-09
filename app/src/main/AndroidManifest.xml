@@ -25,9 +25,6 @@
         <activity
             android:name=".AuthenticationActivity"
             android:exported="true" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true" />
         <activity android:name=".ui.customer.CustomerActivity"
             android:exported="true"/>
     </application>

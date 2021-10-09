@@ -2,11 +2,13 @@ package com.techai.shiftme.ui.userprofile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,10 +20,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.techai.shiftme.BR;
+import com.techai.shiftme.R;
 import com.techai.shiftme.data.model.SignUpModel;
 import com.techai.shiftme.databinding.FragmentUserProfileBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
 import com.techai.shiftme.ui.auth.login.LoginViewModelFactory;
+import com.techai.shiftme.ui.customer.CustomerActivity;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ToastUtils;
@@ -63,8 +67,8 @@ public class UserProfileFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                         AppProgressUtil.INSTANCE.closeOldProgressDialog();
-                        if(task.isSuccessful()){
-                            if(task.getResult().size() >= 1){
+                        if (task.isSuccessful()) {
+                            if (task.getResult().size() >= 1) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     signUpModel = new SignUpModel();
                                     signUpModel = document.toObject(SignUpModel.class);
@@ -80,24 +84,61 @@ public class UserProfileFragment extends Fragment {
         viewModel.navigate.observe(this, new Observer<SignUpModel>() {
             @Override
             public void onChanged(SignUpModel signUpModel) {
-                if(signUpModel != null){
+                if (signUpModel != null) {
                     updateData(signUpModel);
                 }
             }
         });
 
+        getToolbarClick();
+
     }
 
-    private void updateData(SignUpModel signUpModel){
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (requireActivity() instanceof CustomerActivity) {
+            ((CustomerActivity) requireActivity()).showToolbarMenu(true);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (requireActivity() instanceof CustomerActivity) {
+            ((CustomerActivity) requireActivity()).showToolbarMenu(false);
+        }
+        super.onDestroy();
+    }
+
+    private void getToolbarClick() {
+        if (requireActivity() instanceof CustomerActivity) {
+            ((CustomerActivity) requireActivity()).getToolbarView().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    if (item.getItemId() == R.id.action_edit) {
+                        viewModel.isEditIcon(viewModel.isEnabled.getValue());
+                    }
+                    return false;
+                }
+            });
+        }
+    }
+
+    private void updateData(SignUpModel signUpModel) {
         AppProgressUtil.INSTANCE.showOldProgressDialog(requireContext());
         db.collection(Constants.USERS)
                 .document(SharedPrefUtils.getStringData(requireContext(), Constants.FIREBASE_ID))
-                .update("fullName", signUpModel.getFullName(), "address", signUpModel.getAddress(), "emailId", signUpModel.getEmailId(), "phoneNumber", signUpModel.getPhoneNumber())
+                .update("fullName", signUpModel.getFullName(), "address", signUpModel.getAddress(), "emailId", signUpModel.getEmailId(), "phoneNumber",
+                        signUpModel.getPhoneNumber())
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<Void> task) {
                         AppProgressUtil.INSTANCE.closeOldProgressDialog();
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
+                            SharedPrefUtils.saveObject(requireContext(), Constants.SIGN_UP_MODEL, signUpModel);
+                            if (requireActivity() instanceof CustomerActivity) {
+                                ((CustomerActivity) requireActivity()).updateProfileDetails();
+                            }
                             ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Data saved successfully.");
                         } else {
                             ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Could not save data. Probable reason: " + task.getException());

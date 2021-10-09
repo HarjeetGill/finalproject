@@ -18,11 +18,11 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.techai.shiftme.AuthenticationActivity;
 import com.techai.shiftme.BR;
-import com.techai.shiftme.MainActivity;
 import com.techai.shiftme.databinding.FragmentChangePasswordBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
 import com.techai.shiftme.data.model.SignUpModel;
 import com.techai.shiftme.ui.auth.login.LoginViewModelFactory;
+import com.techai.shiftme.ui.customer.CustomerActivity;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ToastUtils;
@@ -98,7 +98,11 @@ public class ChangePasswordFragment extends Fragment {
                             ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Password changed in successfully");
                             SharedPrefUtils.saveData(requireContext(), Constants.IS_LOGGED_IN, true);
                             SharedPrefUtils.saveData(requireContext(), Constants.FIREBASE_ID, signUpModel.getFirebaseId());
-                            startActivity(new Intent(requireContext(), MainActivity.class));
+                            if (signUpModel.getUserRole().equals(Constants.CUSTOMER_USER_ROLE)) {
+                                startActivity(new Intent(requireContext(), CustomerActivity.class));
+                            } else {
+//                                startActivity(new Intent(requireContext(), MainActivity.class));
+                            }
                             if (requireActivity() instanceof AuthenticationActivity) {
                                 requireActivity().finish();
                             }
