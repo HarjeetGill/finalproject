@@ -47,10 +47,10 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
     private void openTimePicker() {
         int hour = myCalendar.get(Calendar.HOUR_OF_DAY);
         int minute = myCalendar.get(Calendar.MINUTE);
-        TimePickerDialog mTimePicker= new TimePickerDialog(requireContext(), new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog mTimePicker = new TimePickerDialog(requireContext(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                binding.etTime.setText( selectedHour + ":" + selectedMinute);
+                binding.etTime.setText(selectedHour + ":" + selectedMinute);
             }
         }, hour, minute, true);//Yes 24 hour time
         mTimePicker.show();
@@ -58,10 +58,10 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
 
     private void openDatePicker() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), (view, year, monthOfYear, dayOfMonth) -> {
-                    String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-                    binding.etDate.setText(selectedDate);
+            String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+            binding.etDate.setText(selectedDate);
 
-                }, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+        }, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
 
         datePickerDialog.show();
     }
