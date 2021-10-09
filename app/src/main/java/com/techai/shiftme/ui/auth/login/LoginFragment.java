@@ -5,14 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -20,7 +18,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.techai.shiftme.MainActivity;
 import com.techai.shiftme.R;
 import com.techai.shiftme.BR;
 import com.techai.shiftme.databinding.FragmentLoginBinding;
@@ -31,7 +28,6 @@ import com.techai.shiftme.ui.customer.CustomerActivity;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ToastUtils;
-
 import org.jetbrains.annotations.NotNull;
 
 public class LoginFragment extends Fragment {

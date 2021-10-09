@@ -8,7 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.techai.shiftme.R;
-import com.techai.shiftme.ui.model.SignUpModel;
+import com.techai.shiftme.data.model.SignUpModel;
 import com.techai.shiftme.utils.SingleLiveEvent;
 import com.techai.shiftme.utils.ValidationUtils;
 

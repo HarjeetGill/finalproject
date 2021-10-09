@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.techai.shiftme.ui.changepassword.ChangePasswordViewModel;
-import com.techai.shiftme.ui.signup.SignupViewModel;
+import com.techai.shiftme.ui.auth.changepassword.ChangePasswordViewModel;
+import com.techai.shiftme.ui.auth.signup.SignupViewModel;
 import com.techai.shiftme.ui.userprofile.UserProfileViewModel;
 
 import org.jetbrains.annotations.NotNull;
