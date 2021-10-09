@@ -68,12 +68,7 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
 
     private void setUpItemsText() {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(requireContext(), android.R.layout.simple_dropdown_item_1line);
-        binding.ntvAddItems.setAdapter(adapter);
-        binding.ntvAddItems.addChipTerminator('\n', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_ALL);
-        binding.ntvAddItems.addChipTerminator(' ', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_TO_TERMINATOR);
-        binding.ntvAddItems.addChipTerminator(';', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_CURRENT_TOKEN);
-        binding.ntvAddItems.setNachoValidator(new ChipifyingNachoValidator());
-        binding.ntvAddItems.enableEditChipOnTouch(false, true);
+
     }
 
     @Override
@@ -85,7 +80,6 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btnSendRequest) {
-            Log.d("TAG", "onClick: " + binding.ntvAddItems.getChipValues().toString());
         }
     }
 }

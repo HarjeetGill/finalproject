@@ -4,11 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:layout_margin="@dimen/_8sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        >
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvAddItems"
@@ -20,18 +23,46 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.hootsuite.nachos.NachoTextView
-            android:id="@+id/ntvAddItems"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilAddItems"
+            style="@style/CustomTextInputLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            android:hint="@string/enter_items_hint"
-            app:chipBackground="@color/colorOne"
-            app:chipHeight="30dp"
-            app:chipTextColor="@color/colorText"
-            app:chipTextSize="@dimen/_15ssp"
-            app:chipVerticalSpacing="3dp"
-            app:layout_constraintTop_toBottomOf="@+id/tvAddItems"/>
+            android:layout_marginEnd="@dimen/_5sdp"
+            app:errorEnabled="false"
+            app:errorIconDrawable="@null"
+            app:startIconDrawable="@drawable/ic_location"
+            app:layout_constraintEnd_toStartOf="@+id/ivAdd"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddItems">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAddItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/enter_items_hint"
+                android:inputType="text"
+                android:enabled="true"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorHint"
+                android:textCursorDrawable="@null" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/ivAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_add"
+            app:tint="@color/black"
+            android:padding="@dimen/_5sdp"
+            android:layout_margin="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tilAddItems"
+            app:layout_constraintBottom_toBottomOf="@id/tilAddItems"
+            />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilPicLocation"
@@ -39,12 +70,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            app:errorEnabled="true"
+            app:errorEnabled="false"
             app:errorIconDrawable="@null"
             app:startIconDrawable="@drawable/ic_location"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ntvAddItems">
+            app:layout_constraintTop_toBottomOf="@+id/tilAddItems">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPicLocation"
@@ -65,7 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            app:errorEnabled="true"
+            app:errorEnabled="false"
             app:errorIconDrawable="@null"
             app:startIconDrawable="@drawable/ic_location"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +122,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            app:errorEnabled="true"
+            app:errorEnabled="false"
             app:errorIconDrawable="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -119,7 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            app:errorEnabled="true"
+            app:errorEnabled="false"
             app:errorIconDrawable="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -132,6 +163,9 @@
                 android:drawablePadding="@dimen/_10sdp"
                 android:hint="@string/select_time"
                 android:inputType="text"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
                 android:enabled="true"
                 android:textColor="@color/colorText"
                 android:textColorHint="@color/colorHint"
