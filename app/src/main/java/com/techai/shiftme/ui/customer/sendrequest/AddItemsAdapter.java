@@ -11,7 +11,6 @@ import com.techai.shiftme.databinding.ItemAddedBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class AddItemsAdapter extends RecyclerView.Adapter<AddItemsAdapter.ItemViewHolder> {
     private List<String> itemList = new ArrayList<>();
 
@@ -33,6 +32,9 @@ public class AddItemsAdapter extends RecyclerView.Adapter<AddItemsAdapter.ItemVi
          notifyDataSetChanged();
     }
 
+    public List<String> getItemList() {
+        return itemList;
+    }
     public void onRemoveClick(String item){
         if(!itemList.isEmpty()) {
             itemList.remove(item);
@@ -45,7 +47,7 @@ public class AddItemsAdapter extends RecyclerView.Adapter<AddItemsAdapter.ItemVi
         return itemList.size();
     }
 
-    public class ItemViewHolder extends RecyclerView.ViewHolder {
+    public static class ItemViewHolder extends RecyclerView.ViewHolder {
         public ItemAddedBinding binding;
         public ItemViewHolder(@NonNull ItemAddedBinding itemAddedBinding) {
             super(itemAddedBinding.getRoot());

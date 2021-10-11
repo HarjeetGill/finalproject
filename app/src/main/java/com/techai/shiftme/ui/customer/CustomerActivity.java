@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -15,9 +13,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import com.techai.shiftme.R;
 import com.techai.shiftme.databinding.ActivityCustomerBinding;
-import com.techai.shiftme.databinding.NavHeaderCustomerBinding;
 
-public class CustomerActivity extends AppCompatActivity {
+public class CustomerActivity extends AppCompatActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityCustomerBinding binding;

@@ -23,6 +23,7 @@ import com.techai.shiftme.databinding.FragmentChangePasswordBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
 import com.techai.shiftme.data.model.SignUpModel;
 import com.techai.shiftme.ui.auth.login.LoginViewModelFactory;
+import com.techai.shiftme.ui.customer.CustomerActivity;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ToastUtils;
@@ -98,7 +99,7 @@ public class ChangePasswordFragment extends Fragment {
                             ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Password changed in successfully");
                             SharedPrefUtils.saveData(requireContext(), Constants.IS_LOGGED_IN, true);
                             SharedPrefUtils.saveData(requireContext(), Constants.FIREBASE_ID, signUpModel.getFirebaseId());
-                            startActivity(new Intent(requireContext(), MainActivity.class));
+                            startActivity(new Intent(requireContext(), CustomerActivity.class));
                             if (requireActivity() instanceof AuthenticationActivity) {
                                 requireActivity().finish();
                             }
