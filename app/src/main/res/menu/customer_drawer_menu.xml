@@ -12,5 +12,9 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_profile" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/tv_logout" />
     </group>
 </menu>

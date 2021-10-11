@@ -1,7 +1,12 @@
 package com.techai.shiftme.ui.customer;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -14,16 +19,19 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.techai.shiftme.AuthenticationActivity;
 import com.techai.shiftme.R;
 import com.techai.shiftme.data.model.SignUpModel;
 import com.techai.shiftme.databinding.ActivityCustomerBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
+import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 
 public class CustomerActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityCustomerBinding binding;
+    private MenuItem logOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,29 @@ public class CustomerActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         updateProfileDetails();
+        drawerMenuItemClick();
+    }
+
+    private void drawerMenuItemClick() {
+        logOut = binding.navView.getMenu().findItem(R.id.nav_logout);
+        logOut.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                AppProgressUtil.INSTANCE.showOldProgressDialog(CustomerActivity.this);
+                SharedPrefUtils.saveData(CustomerActivity.this, Constants.IS_LOGGED_IN, false);
+                SharedPrefUtils.saveData(CustomerActivity.this, Constants.FIREBASE_ID, "");
+                SharedPrefUtils.getSharedPrefEditor(CustomerActivity.this, getString(R.string.app_name)).clear().commit();
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        AppProgressUtil.INSTANCE.closeOldProgressDialog();
+                        startActivity(new Intent(CustomerActivity.this, AuthenticationActivity.class));
+                        CustomerActivity.this.finish();
+                    }
+                }, 1000);
+                return true;
+            }
+        });
     }
 
     @Override
