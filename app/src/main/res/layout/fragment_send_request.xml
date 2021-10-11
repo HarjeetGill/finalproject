@@ -161,7 +161,7 @@
                     android:text="@{viewModel.date}"
                     android:cursorVisible="false"
                     android:focusable="false"
-                    android:enabled="false"
+                    android:enabled="true"
                     android:textColor="@color/colorText"
                     android:textColorHint="@color/colorHint" />
             </com.google.android.material.textfield.TextInputLayout>
