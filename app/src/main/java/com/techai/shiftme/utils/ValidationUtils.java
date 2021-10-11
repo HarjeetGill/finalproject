@@ -5,6 +5,8 @@ import com.techai.shiftme.R;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 import kotlin.Pair;
 import kotlin.jvm.JvmStatic;
 import kotlin.jvm.internal.Intrinsics;
@@ -43,6 +45,17 @@ public final class ValidationUtils {
             }
         }
 
+        return new Pair(false, R.string.error_empty_field);
+    }
+
+    @JvmStatic
+    @NotNull
+    public static final Pair isStringListValid(@Nullable List<String> list) {
+        if (list != null) {
+           if(!list.isEmpty()){
+               return new Pair(true,0);
+           }
+        }
         return new Pair(false, R.string.error_empty_field);
     }
 

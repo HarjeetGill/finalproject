@@ -57,4 +57,9 @@
     <string name="tv_edit">Edit</string>
     <string name="tv_logout">Logout</string>
 
+    <string-array name="vehicle">
+        <item>Small - 5$/km</item>
+        <item>Large - 10$/km</item>
+        <item>Very Large - 15$/km</item>
+    </string-array>
 </resources>
