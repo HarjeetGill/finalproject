@@ -46,6 +46,7 @@
 
     <string name="menu_profile">User Profile</string>
     <string name="menu_send_request">Send Request</string>
+    <string name="menu_requests">Requests</string>
     <string name="tv_user_profile">User Profile</string>
     <string name="tv_send_request">Send Request</string>
     <string name="enter_items_hint">Enter Items</string>

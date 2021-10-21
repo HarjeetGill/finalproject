@@ -20,6 +20,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.techai.shiftme.data.model.SignUpModel;
 import com.techai.shiftme.databinding.ActivitySplashBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
+import com.techai.shiftme.ui.agency.AgencyActivity;
 import com.techai.shiftme.ui.customer.CustomerActivity;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ToastUtils;
@@ -71,6 +72,8 @@ public class SplashActivity extends AppCompatActivity {
                                     SharedPrefUtils.saveObject(SplashActivity.this, Constants.SIGN_UP_MODEL, newSignUpModel);
                                     if (userRole.equals(Constants.CUSTOMER_USER_ROLE)) {
                                         startActivity(new Intent(SplashActivity.this, CustomerActivity.class));
+                                    } else {
+                                        startActivity(new Intent(SplashActivity.this, AgencyActivity.class));
                                     }
                                 }
                             }

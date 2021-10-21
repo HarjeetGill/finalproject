@@ -27,6 +27,8 @@
             android:exported="true" />
         <activity android:name=".ui.customer.CustomerActivity"
             android:exported="true"/>
+        <activity android:name=".ui.agency.AgencyActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>

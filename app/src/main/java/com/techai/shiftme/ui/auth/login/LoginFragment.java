@@ -24,6 +24,7 @@ import com.techai.shiftme.databinding.FragmentLoginBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
 import com.techai.shiftme.data.model.LogInModel;
 import com.techai.shiftme.data.model.SignUpModel;
+import com.techai.shiftme.ui.agency.AgencyActivity;
 import com.techai.shiftme.ui.customer.CustomerActivity;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
@@ -109,6 +110,8 @@ public class LoginFragment extends Fragment {
 
                                                                 if(signUpModel.getUserRole().equals(Constants.CUSTOMER_USER_ROLE)){
                                                                     startActivity(new Intent(requireContext(), CustomerActivity.class));
+                                                                } else {
+                                                                    startActivity(new Intent(requireContext(), AgencyActivity.class));
                                                                 }
                                                                 requireActivity().finish();
                                                             } else {

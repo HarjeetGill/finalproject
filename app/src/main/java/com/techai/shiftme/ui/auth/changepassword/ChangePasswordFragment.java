@@ -21,6 +21,7 @@ import com.techai.shiftme.BR;
 import com.techai.shiftme.databinding.FragmentChangePasswordBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
 import com.techai.shiftme.data.model.SignUpModel;
+import com.techai.shiftme.ui.agency.AgencyActivity;
 import com.techai.shiftme.ui.auth.login.LoginViewModelFactory;
 import com.techai.shiftme.ui.customer.CustomerActivity;
 import com.techai.shiftme.utils.AppProgressUtil;
@@ -101,7 +102,7 @@ public class ChangePasswordFragment extends Fragment {
                             if (signUpModel.getUserRole().equals(Constants.CUSTOMER_USER_ROLE)) {
                                 startActivity(new Intent(requireContext(), CustomerActivity.class));
                             } else {
-//                                startActivity(new Intent(requireContext(), MainActivity.class));
+                                startActivity(new Intent(requireContext(), AgencyActivity.class));
                             }
                             if (requireActivity() instanceof AuthenticationActivity) {
                                 requireActivity().finish();

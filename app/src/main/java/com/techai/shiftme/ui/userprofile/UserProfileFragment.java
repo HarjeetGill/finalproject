@@ -24,6 +24,7 @@ import com.techai.shiftme.R;
 import com.techai.shiftme.data.model.SignUpModel;
 import com.techai.shiftme.databinding.FragmentUserProfileBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
+import com.techai.shiftme.ui.agency.AgencyActivity;
 import com.techai.shiftme.ui.auth.login.LoginViewModelFactory;
 import com.techai.shiftme.ui.customer.CustomerActivity;
 import com.techai.shiftme.utils.AppProgressUtil;
@@ -99,6 +100,8 @@ public class UserProfileFragment extends Fragment {
         super.onResume();
         if (requireActivity() instanceof CustomerActivity) {
             ((CustomerActivity) requireActivity()).showToolbarMenu(true);
+        } else if (requireActivity() instanceof AgencyActivity) {
+            ((AgencyActivity) requireActivity()).showToolbarMenu(true);
         }
     }
 
@@ -106,6 +109,8 @@ public class UserProfileFragment extends Fragment {
     public void onDestroy() {
         if (requireActivity() instanceof CustomerActivity) {
             ((CustomerActivity) requireActivity()).showToolbarMenu(false);
+        } else if (requireActivity() instanceof AgencyActivity) {
+            ((AgencyActivity) requireActivity()).showToolbarMenu(true);
         }
         super.onDestroy();
     }
@@ -113,6 +118,16 @@ public class UserProfileFragment extends Fragment {
     private void getToolbarClick() {
         if (requireActivity() instanceof CustomerActivity) {
             ((CustomerActivity) requireActivity()).getToolbarView().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    if (item.getItemId() == R.id.action_edit) {
+                        viewModel.isEditIcon(viewModel.isEnabled.getValue());
+                    }
+                    return false;
+                }
+            });
+        } else if (requireActivity() instanceof AgencyActivity) {
+            ((AgencyActivity) requireActivity()).getToolbarView().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     if (item.getItemId() == R.id.action_edit) {
@@ -138,6 +153,8 @@ public class UserProfileFragment extends Fragment {
                             SharedPrefUtils.saveObject(requireContext(), Constants.SIGN_UP_MODEL, signUpModel);
                             if (requireActivity() instanceof CustomerActivity) {
                                 ((CustomerActivity) requireActivity()).updateProfileDetails();
+                            } else if (requireActivity() instanceof AgencyActivity) {
+                                ((AgencyActivity) requireActivity()).updateProfileDetails();
                             }
                             ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Data saved successfully.");
                         } else {
