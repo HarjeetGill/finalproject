@@ -25,6 +25,8 @@ public final class Constants {
     public static final String CUSTOMER_USER_ROLE = "Customer";
     @NotNull
     public static final String AGENCY_USER_ROLE = "Agency";
+    @NotNull
+    public static final String MAP_ADDRESS = "MAP_ADDRESS";
 
     private Constants() {
     }

@@ -104,4 +104,9 @@ dependencies {
 
     // OTP
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.2'
+
+    //Google Map
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation "com.google.android.gms:play-services-location:18.0.0"
+    implementation "com.google.android.libraries.places:places:2.4.0"
 }

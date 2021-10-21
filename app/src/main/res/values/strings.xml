@@ -62,4 +62,7 @@
         <item>Large - 10$/km</item>
         <item>Very Large - 15$/km</item>
     </string-array>
+
+    <string name="tv_current_location">Current Location</string>
+    <string name="maps_api_key">AIzaSyDi3C7AoQ8K0nr1bwgg-6XgDrp2REM6GTs</string>
 </resources>
