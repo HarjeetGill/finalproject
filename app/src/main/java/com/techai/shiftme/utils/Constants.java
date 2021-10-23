@@ -25,6 +25,19 @@ public final class Constants {
     public static final String CUSTOMER_USER_ROLE = "Customer";
     @NotNull
     public static final String AGENCY_USER_ROLE = "Agency";
+    @NotNull
+    public static final String MAP_ADDRESS = "MAP_ADDRESS";
+    @NotNull
+    public static final String REQUESTS = "requests";
+    @NotNull
+    public static final String PENDING_REQUEST = "Pending";
+    @NotNull
+    public static final String APPROVED_REQUEST = "Approved";
+    @NotNull
+    public static final String REJECTED_REQUEST = "Rejected";
+    @NotNull
+    public static final String DATE_TIME_SEPARATOR = ", ";
+
 
     private Constants() {
     }

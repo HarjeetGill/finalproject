@@ -57,10 +57,14 @@
     <string name="select_time">Select Time</string>
     <string name="tv_edit">Edit</string>
     <string name="tv_logout">Logout</string>
+    <string name="no_of_movers">Number of Movers</string>
 
     <string-array name="vehicle">
         <item>Small - 5$/km</item>
         <item>Large - 10$/km</item>
         <item>Very Large - 15$/km</item>
     </string-array>
+
+    <string name="tv_current_location">Current Location</string>
+    <string name="maps_api_key">AIzaSyDi3C7AoQ8K0nr1bwgg-6XgDrp2REM6GTs</string>
 </resources>
