@@ -22,9 +22,11 @@ public class RequestsListAdapter extends RecyclerView.Adapter<RequestsListAdapte
 
     public ArrayList<Request> items = new ArrayList<>();
     public AppCompatActivity activity;
+    public IApproveRejectListener iApproveRejectListener;
 
-    public RequestsListAdapter(AppCompatActivity appCompatActivity) {
+    public RequestsListAdapter(AppCompatActivity appCompatActivity, IApproveRejectListener iApproveRejectListener) {
         activity = appCompatActivity;
+        this.iApproveRejectListener = iApproveRejectListener;
     }
 
     public void setItemList(ArrayList<Request> list) {
@@ -36,7 +38,7 @@ public class RequestsListAdapter extends RecyclerView.Adapter<RequestsListAdapte
     @Override
     public RequestsListAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemRequestListBinding binding = ItemRequestListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new RequestsListAdapter.ItemViewHolder(binding, activity);
+        return new RequestsListAdapter.ItemViewHolder(binding, activity, iApproveRejectListener);
     }
 
     @Override
@@ -52,26 +54,54 @@ public class RequestsListAdapter extends RecyclerView.Adapter<RequestsListAdapte
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         public ItemRequestListBinding binding;
         public AppCompatActivity activity;
+        public IApproveRejectListener iApproveRejectListener;
 
-        public ItemViewHolder(@NonNull ItemRequestListBinding itemRequestListBinding, AppCompatActivity appCompatActivity) {
+        public ItemViewHolder(@NonNull ItemRequestListBinding itemRequestListBinding, AppCompatActivity appCompatActivity, IApproveRejectListener iApproveRejectListener) {
             super(itemRequestListBinding.getRoot());
             this.binding = itemRequestListBinding;
             this.activity = appCompatActivity;
+            this.iApproveRejectListener = iApproveRejectListener;
         }
 
         public void onBind(Request request) {
             binding.tvListOfItems.setText(String.format(binding.getRoot().getContext().getString(R.string.list_of_items_to_move), TextUtils.join(", ", request.getItemsToShift())));
-            binding.tvDistance.setText(String.format(binding.getRoot().getContext().getString(R.string.estimated_distance), request.getDateAndTime()));
+            binding.tvDistance.setText(String.format(binding.getRoot().getContext().getString(R.string.estimated_distance), request.getDistance()));
             binding.tvDateNTime.setText(String.format(binding.getRoot().getContext().getString(R.string.date_time_for_pick), request.getDateAndTime().split(Constants.DATE_TIME_SEPARATOR)[0], request.getDateAndTime().split(Constants.DATE_TIME_SEPARATOR)[1]));
-            binding.tvRequestByUserName.setText(String.format(binding.getRoot().getContext().getString(R.string.request_by), request.getDateAndTime()));
+            binding.tvRequestByUserName.setText(String.format(binding.getRoot().getContext().getString(R.string.request_by), request.getUserDetails().getFullName()));
             binding.tvStatus.setText(request.getStatus());
 
+            switch (request.getStatus()) {
+                case Constants.PENDING_REQUEST: {
+                    binding.ivReject.setVisibility(View.VISIBLE);
+                    binding.ivApprove.setVisibility(View.VISIBLE);
+                    break;
+                }
+                case Constants.APPROVED_REQUEST:
+                case Constants.REJECTED_REQUEST: {
+                    binding.ivReject.setVisibility(View.GONE);
+                    binding.ivApprove.setVisibility(View.GONE);
+                    break;
+                }
+            }
+
             binding.ivEmail.setOnClickListener(view -> {
-                openEmail("");
+                if (!request.getStatus().equals(Constants.REJECTED_REQUEST)) {
+                    openEmail(request.getUserDetails().getEmailId());
+                }
             });
 
             binding.ivPhone.setOnClickListener(view -> {
-                openCall("");
+                if (!request.getStatus().equals(Constants.REJECTED_REQUEST)) {
+                    openCall(request.getUserDetails().getPhoneNumber());
+                }
+            });
+
+            binding.ivApprove.setOnClickListener(view -> {
+                iApproveRejectListener.updateStatus(true, getAdapterPosition());
+            });
+
+            binding.ivReject.setOnClickListener(view -> {
+                iApproveRejectListener.updateStatus(false, getAdapterPosition());
             });
 
         }

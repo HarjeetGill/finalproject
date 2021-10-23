@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.techai.shiftme.data.model.AgencyModel;
 import com.techai.shiftme.data.model.Request;
 import com.techai.shiftme.data.model.SignUpModel;
 import com.techai.shiftme.preferences.SharedPrefUtils;
@@ -33,14 +34,14 @@ public class SendRequestViewModel extends AndroidViewModel {
     public MutableLiveData<String> time = new MutableLiveData<>("");
     public MutableLiveData<String> errorTime = new MutableLiveData<>("");
     public MutableLiveData<String> pickLocation = new MutableLiveData<>("");
-    public MutableLiveData<String> errorPickLocation= new MutableLiveData<>("");
+    public MutableLiveData<String> errorPickLocation = new MutableLiveData<>("");
     public MutableLiveData<String> destinationLocation = new MutableLiveData<>("");
     public MutableLiveData<String> errorDestinationLocation = new MutableLiveData<>("");
-    public MutableLiveData<String> vehicle =  new MutableLiveData<>("");
-    public MutableLiveData<List<String>> itemList =  new MutableLiveData<>();
-    public MutableLiveData<String> errorItemList =  new MutableLiveData<>("");
+    public MutableLiveData<String> vehicle = new MutableLiveData<>("");
+    public MutableLiveData<List<String>> itemList = new MutableLiveData<>();
+    public MutableLiveData<String> errorItemList = new MutableLiveData<>("");
     public MutableLiveData<String> noOfMovers = new MutableLiveData<>("");
-    public MutableLiveData<String> errorNoOfMovers= new MutableLiveData<>("");
+    public MutableLiveData<String> errorNoOfMovers = new MutableLiveData<>("");
     public boolean isAllFieldsValid = true;
     public Request request = null;
     public SingleLiveEvent<Request> shiftRequest = new SingleLiveEvent<Request>();
@@ -58,15 +59,15 @@ public class SendRequestViewModel extends AndroidViewModel {
         isTimeValid();
         isNoOfMoversValid();
         if (isAllFieldsValid) {
-            request = new Request((ArrayList<String>) itemList.getValue(),0.0,0.0,0.0,
-                    0.0,date.getValue()+Constants.DATE_TIME_SEPARATOR +time.getValue(),"Small",
-                    "10 $",Integer.valueOf(Objects.requireNonNull(noOfMovers.getValue())), Constants.PENDING_REQUEST,
-                    SharedPrefUtils.getObject(view.getContext(),Constants.SIGN_UP_MODEL, SignUpModel.class));
+            request = new Request((ArrayList<String>) itemList.getValue(), new ArrayList<String>(), new ArrayList<AgencyModel>(), 0.0, 0.0, 0.0,
+                    0.0, date.getValue() + Constants.DATE_TIME_SEPARATOR + time.getValue(), "Small",
+                    "10 $", Integer.valueOf(Objects.requireNonNull(noOfMovers.getValue())), Constants.PENDING_REQUEST, "", SharedPrefUtils.getStringData(view.getContext(), Constants.FIREBASE_ID), "", "",
+                    SharedPrefUtils.getObject(view.getContext(), Constants.SIGN_UP_MODEL, SignUpModel.class), null);
             shiftRequest.postValue(request);
         }
     }
 
-    public void isItemsValid(){
+    public void isItemsValid() {
         Pair<Boolean, Integer> result = ValidationUtils.isStringListValid(itemList.getValue());
         if (result.getFirst()) {
             errorItemList.postValue("");
@@ -116,7 +117,7 @@ public class SendRequestViewModel extends AndroidViewModel {
         }
     }
 
-    public void isNoOfMoversValid(){
+    public void isNoOfMoversValid() {
         Pair<Boolean, Integer> result = ValidationUtils.isFieldValid(noOfMovers.getValue());
         if (result.getFirst()) {
             errorNoOfMovers.postValue("");
@@ -125,6 +126,7 @@ public class SendRequestViewModel extends AndroidViewModel {
             errorNoOfMovers.postValue(String.format(getApplication().getString(result.getSecond()), "no. of movers"));
         }
     }
+
     public void openDatePicker(Context context) {
         DatePickerDialog datePickerDialog = new DatePickerDialog(context, (view, year, monthOfYear, dayOfMonth) -> {
             String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
@@ -148,7 +150,7 @@ public class SendRequestViewModel extends AndroidViewModel {
         mTimePicker.show();
     }
 
-    public void clearAllFields(){
+    public void clearAllFields() {
         date.postValue("");
         errorDate.postValue("");
         time.postValue("");

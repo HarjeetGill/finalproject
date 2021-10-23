@@ -47,7 +47,7 @@ public class RequestsFragment extends Fragment {
     }
 
     private void setAdapter() {
-        final RequestsPagerAdapter adapter = new RequestsPagerAdapter(requireContext(), requireActivity().getSupportFragmentManager(), binding.tabLayout.getTabCount());
+        final RequestsPagerAdapter adapter = new RequestsPagerAdapter(requireContext(), getChildFragmentManager(), binding.tabLayout.getTabCount());
         binding.viewPager.setAdapter(adapter);
     }
 

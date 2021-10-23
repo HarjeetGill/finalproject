@@ -18,8 +18,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -60,7 +58,7 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        db=FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         binding.btnSendRequest.setOnClickListener(this);
         setUpViews();
         setUpAdapter();
@@ -83,32 +81,17 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
         AppProgressUtil.INSTANCE.showOldProgressDialog(requireContext());
         db.collection(Constants.REQUESTS)
                 .add(request)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        db.collection(Constants.REQUESTS)
-                                .document(documentReference.getId())
-                                .update("firebaseId", SharedPrefUtils.getStringData(requireContext(), Constants.FIREBASE_ID))
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        AppProgressUtil.INSTANCE.closeOldProgressDialog();
-                                        if (task.isSuccessful()) {
-                                            ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Successfully Request Submitted");
-                                            adapter.clearList();
-                                            sendRequestViewModel.clearAllFields();
-                                        } else {
-                                            ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, String.valueOf(task.getException()));
-                                        }
-                                    }
-                                });
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
                         AppProgressUtil.INSTANCE.closeOldProgressDialog();
-                        ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, e.getLocalizedMessage());
+                        if (task.isSuccessful()) {
+                            ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Successfully Request Submitted");
+                            adapter.clearList();
+                            sendRequestViewModel.clearAllFields();
+                        } else {
+                            ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, String.valueOf(task.getException()));
+                        }
                     }
                 });
 

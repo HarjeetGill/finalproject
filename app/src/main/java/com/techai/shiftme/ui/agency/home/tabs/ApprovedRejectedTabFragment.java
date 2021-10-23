@@ -25,7 +25,7 @@ import com.techai.shiftme.utils.Constants;
 
 import java.util.ArrayList;
 
-public class ApprovedRejectedTabFragment extends Fragment {
+public class ApprovedRejectedTabFragment extends Fragment implements IApproveRejectListener {
 
     private FragmentNewRequestsTabBinding binding;
     private DocumentReference docRef = null;
@@ -74,6 +74,7 @@ public class ApprovedRejectedTabFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 request = new Request();
                                 request = document.toObject(Request.class);
+                                request.setRequestId(document.getId());
                                 requestList.add(request);
                             }
                             if (requestList.isEmpty()) {
@@ -91,7 +92,12 @@ public class ApprovedRejectedTabFragment extends Fragment {
 
     private void setUpAdapter() {
         binding.rvRequests.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new RequestsListAdapter((AppCompatActivity) requireActivity());
+        adapter = new RequestsListAdapter((AppCompatActivity) requireActivity(), this);
         binding.rvRequests.setAdapter(adapter);
+    }
+
+    @Override
+    public void updateStatus(Boolean isApproved, int position) {
+
     }
 }
