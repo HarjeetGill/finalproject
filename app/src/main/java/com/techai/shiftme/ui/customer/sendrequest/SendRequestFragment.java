@@ -95,6 +95,8 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
                                         AppProgressUtil.INSTANCE.closeOldProgressDialog();
                                         if (task.isSuccessful()) {
                                             ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Successfully Request Submitted");
+                                            adapter.clearList();
+                                            sendRequestViewModel.clearAllFields();
                                         } else {
                                             ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, String.valueOf(task.getException()));
                                         }

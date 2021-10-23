@@ -47,6 +47,11 @@ public class AddItemsAdapter extends RecyclerView.Adapter<AddItemsAdapter.ItemVi
         return itemList.size();
     }
 
+    public void clearList() {
+        itemList.clear();
+        notifyDataSetChanged();
+    }
+
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         public ItemAddedBinding binding;
         public ItemViewHolder(@NonNull ItemAddedBinding itemAddedBinding) {
