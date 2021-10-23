@@ -16,6 +16,7 @@ import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.SingleLiveEvent;
 import com.techai.shiftme.utils.ValidationUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -54,7 +55,7 @@ public class SendRequestViewModel extends AndroidViewModel {
         isTimeValid();
         isNoOfMoversValid();
         if (isAllFieldsValid) {
-            request = new Request(itemList.getValue(),0.0,0.0,0.0,
+            request = new Request((ArrayList<String>) itemList.getValue(),0.0,0.0,0.0,
                     0.0,date.getValue()+Constants.DATE_TIME_SEPARATOR +time.getValue(),"Small",
                     "10 $",Integer.valueOf(Objects.requireNonNull(noOfMovers.getValue())), Constants.PENDING_REQUEST);
             shiftRequest.postValue(request);

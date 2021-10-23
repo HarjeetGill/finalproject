@@ -67,4 +67,11 @@
 
     <string name="tv_current_location">Current Location</string>
     <string name="maps_api_key">AIzaSyDi3C7AoQ8K0nr1bwgg-6XgDrp2REM6GTs</string>
+
+    <string name="list_of_items_to_move">List of items to move: %1$s</string>
+    <string name="estimated_distance">Estimated distance: %1$s</string>
+    <string name="date_time_for_pick">Date: %1$s and Time: %2$s</string>
+    <string name="request_by">Request By: %1$s</string>
+    <string name="tv_no_data_available">No Data Available</string>
+
 </resources>
