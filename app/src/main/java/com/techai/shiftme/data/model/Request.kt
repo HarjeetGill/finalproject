@@ -10,5 +10,6 @@ data class Request(
     var vehicleType: String,
     var costOfShifting: String,
     var noOfMovers: Int,
-    var status: String
+    var status: String,
+    var userDetails: SignUpModel
 )

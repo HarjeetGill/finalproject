@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.TimePicker;
 
@@ -12,10 +13,13 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.techai.shiftme.data.model.Request;
+import com.techai.shiftme.data.model.SignUpModel;
+import com.techai.shiftme.preferences.SharedPrefUtils;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.SingleLiveEvent;
 import com.techai.shiftme.utils.ValidationUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -56,7 +60,8 @@ public class SendRequestViewModel extends AndroidViewModel {
         if (isAllFieldsValid) {
             request = new Request(itemList.getValue(),0.0,0.0,0.0,
                     0.0,date.getValue()+Constants.DATE_TIME_SEPARATOR +time.getValue(),"Small",
-                    "10 $",Integer.valueOf(Objects.requireNonNull(noOfMovers.getValue())), Constants.PENDING_REQUEST);
+                    "10 $",Integer.valueOf(Objects.requireNonNull(noOfMovers.getValue())), Constants.PENDING_REQUEST,
+                    SharedPrefUtils.getObject(view.getContext(),Constants.SIGN_UP_MODEL, SignUpModel.class));
             shiftRequest.postValue(request);
         }
     }
@@ -141,6 +146,23 @@ public class SendRequestViewModel extends AndroidViewModel {
             }
         }, hour, minute, true);
         mTimePicker.show();
+    }
+
+    public void clearAllFields(){
+        date.postValue("");
+        errorDate.postValue("");
+        time.postValue("");
+        errorTime.postValue("");
+        pickLocation.postValue("");
+        errorPickLocation.postValue("");
+        destinationLocation.postValue("");
+        errorDestinationLocation.postValue("");
+        vehicle.postValue("");
+        itemList.postValue(new ArrayList<>());
+        errorItemList.postValue("");
+        noOfMovers.postValue("");
+        errorNoOfMovers.postValue("");
+        isAllFieldsValid = false;
     }
 
 }

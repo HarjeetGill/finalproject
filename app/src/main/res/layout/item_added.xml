@@ -12,7 +12,7 @@
         android:textColor="@color/colorText"
         android:maxLines="2"
         android:ellipsize="end"
-        android:textSize="@dimen/_16ssp"
+        android:textSize="@dimen/_14ssp"
         android:layout_margin="@dimen/_5sdp"
         app:layout_constraintEnd_toStartOf="@+id/ivClose"
         app:layout_constraintStart_toStartOf="parent"
