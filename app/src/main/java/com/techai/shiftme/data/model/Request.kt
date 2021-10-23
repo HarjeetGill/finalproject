@@ -11,5 +11,5 @@ data class Request(
     var costOfShifting: String = "",
     var noOfMovers: Int = 0,
     var status: String = "",
-    var userDetails: SignUpModel
+    var userDetails: SignUpModel? = null
 )
