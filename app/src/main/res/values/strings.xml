@@ -56,6 +56,7 @@
     <string name="select_time">Select Time</string>
     <string name="tv_edit">Edit</string>
     <string name="tv_logout">Logout</string>
+    <string name="no_of_movers">Number of Movers</string>
 
     <string-array name="vehicle">
         <item>Small - 5$/km</item>

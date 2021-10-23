@@ -4,7 +4,6 @@ import android.app.Application;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
 
@@ -12,10 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.techai.shiftme.data.model.Request;
+import com.techai.shiftme.utils.Constants;
+import com.techai.shiftme.utils.SingleLiveEvent;
 import com.techai.shiftme.utils.ValidationUtils;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import kotlin.Pair;
 
@@ -32,7 +35,11 @@ public class SendRequestViewModel extends AndroidViewModel {
     public MutableLiveData<String> vehicle =  new MutableLiveData<>("");
     public MutableLiveData<List<String>> itemList =  new MutableLiveData<>();
     public MutableLiveData<String> errorItemList =  new MutableLiveData<>("");
+    public MutableLiveData<String> noOfMovers = new MutableLiveData<>("");
+    public MutableLiveData<String> errorNoOfMovers= new MutableLiveData<>("");
     public boolean isAllFieldsValid = true;
+    public Request request = null;
+    public SingleLiveEvent<Request> shiftRequest = new SingleLiveEvent<Request>();
 
     private final Calendar myCalendar = Calendar.getInstance();
 
@@ -45,8 +52,12 @@ public class SendRequestViewModel extends AndroidViewModel {
         isItemsValid();
         isDateValid();
         isTimeValid();
+        isNoOfMoversValid();
         if (isAllFieldsValid) {
-            Log.d("TAG", "onSendRequestClick: Valid Value");
+            request = new Request(itemList.getValue(),0.0,0.0,0.0,
+                    0.0,date.getValue()+Constants.DATE_TIME_SEPARATOR +time.getValue(),"Small",
+                    "10 $",Integer.valueOf(Objects.requireNonNull(noOfMovers.getValue())), Constants.PENDING_REQUEST);
+            shiftRequest.postValue(request);
         }
     }
 
@@ -97,6 +108,16 @@ public class SendRequestViewModel extends AndroidViewModel {
         } else {
             isAllFieldsValid = false;
             errorDestinationLocation.postValue(String.format(getApplication().getString(result.getSecond()), "distance location"));
+        }
+    }
+
+    public void isNoOfMoversValid(){
+        Pair<Boolean, Integer> result = ValidationUtils.isFieldValid(noOfMovers.getValue());
+        if (result.getFirst()) {
+            errorNoOfMovers.postValue("");
+        } else {
+            isAllFieldsValid = false;
+            errorNoOfMovers.postValue(String.format(getApplication().getString(result.getSecond()), "no. of movers"));
         }
     }
     public void openDatePicker(Context context) {

@@ -13,13 +13,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.techai.shiftme.BR;
 import com.techai.shiftme.R;
+import com.techai.shiftme.data.model.Request;
 import com.techai.shiftme.databinding.FragmentSendRequestBinding;
+import com.techai.shiftme.preferences.SharedPrefUtils;
+import com.techai.shiftme.utils.AppProgressUtil;
+import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ShiftMeUtils;
+import com.techai.shiftme.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,6 +46,7 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
     private AddItemsAdapter adapter;
     private List<String> itemList = new ArrayList<>();
     private String selectedVehicle;
+    private FirebaseFirestore db = null;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,10 +60,56 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        db=FirebaseFirestore.getInstance();
         binding.btnSendRequest.setOnClickListener(this);
         setUpViews();
         setUpAdapter();
         setUpClickListener();
+        setUpObserver();
+    }
+
+    private void setUpObserver() {
+        sendRequestViewModel.shiftRequest.observe(getViewLifecycleOwner(), new Observer<Request>() {
+            @Override
+            public void onChanged(Request request) {
+                if (request != null) {
+                    saveShiftRequest(request);
+                }
+            }
+        });
+    }
+
+    private void saveShiftRequest(Request request) {
+        AppProgressUtil.INSTANCE.showOldProgressDialog(requireContext());
+        db.collection(Constants.REQUESTS)
+                .add(request)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        db.collection(Constants.REQUESTS)
+                                .document(documentReference.getId())
+                                .update("firebaseId", SharedPrefUtils.getStringData(requireContext(), Constants.FIREBASE_ID))
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        AppProgressUtil.INSTANCE.closeOldProgressDialog();
+                                        if (task.isSuccessful()) {
+                                            ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Successfully Request Submitted");
+                                        } else {
+                                            ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, String.valueOf(task.getException()));
+                                        }
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        AppProgressUtil.INSTANCE.closeOldProgressDialog();
+                        ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, e.getLocalizedMessage());
+                    }
+                });
+
     }
 
     private void setUpClickListener() {
