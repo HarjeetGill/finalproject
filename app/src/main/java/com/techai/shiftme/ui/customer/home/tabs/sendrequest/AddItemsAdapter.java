@@ -1,4 +1,4 @@
-package com.techai.shiftme.ui.customer.sendrequest;
+package com.techai.shiftme.ui.customer.home.tabs.sendrequest;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

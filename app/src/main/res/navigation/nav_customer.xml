@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_customer"
-    app:startDestination="@+id/nav_send_request">
+    app:startDestination="@+id/nav_customer_request">
 
     <fragment
-        android:id="@+id/nav_send_request"
-        android:name="com.techai.shiftme.ui.customer.sendrequest.SendRequestFragment"
-        android:label="@string/menu_send_request"
-        tools:layout="@layout/fragment_send_request" >
+        android:id="@+id/nav_customer_request"
+        android:name="com.techai.shiftme.ui.customer.home.CustomerRequestsFragment"
+        android:label="@string/menu_customer_requests"
+        tools:layout="@layout/fragment_requests" >
         <action
-            android:id="@+id/action_nav_send_request_to_nav_profile"
+            android:id="@+id/action_nav_customer_request_to_nav_profile"
             app:destination="@id/nav_profile" />
     </fragment>
 

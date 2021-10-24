@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.techai.shiftme.ui.agency.home.RequestsViewModel;
 import com.techai.shiftme.ui.auth.changepassword.ChangePasswordViewModel;
 import com.techai.shiftme.ui.auth.signup.SignupViewModel;
+import com.techai.shiftme.ui.customer.home.CustomerRequestsViewModel;
 import com.techai.shiftme.ui.userprofile.UserProfileViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -52,6 +53,13 @@ public class LoginViewModelFactory extends ViewModelProvider.NewInstanceFactory 
         } else if (modelClass == RequestsViewModel.class) {
             try {
                 return (T) new RequestsViewModel(application);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else if (modelClass == CustomerRequestsViewModel.class) {
+            try {
+                return (T) new CustomerRequestsViewModel(application);
             } catch (Exception e) {
                 e.printStackTrace();
             }

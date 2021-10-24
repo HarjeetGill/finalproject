@@ -52,7 +52,7 @@ public class CustomerActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_send_request, R.id.nav_profile)
+                R.id.nav_customer_request, R.id.nav_profile)
                 .setOpenableLayout(drawer)
                 .build();
 

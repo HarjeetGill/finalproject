@@ -31,7 +31,7 @@
             android:exported="true"/>
         <activity android:name=".ui.agency.AgencyActivity"
             android:exported="true"/>
-        <activity android:name=".ui.customer.sendrequest.MapActivity"
+        <activity android:name=".ui.customer.home.tabs.sendrequest.MapActivity"
             android:exported="true"/>
 
         <meta-data

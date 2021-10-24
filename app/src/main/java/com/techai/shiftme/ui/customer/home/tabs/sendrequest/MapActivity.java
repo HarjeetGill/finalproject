@@ -1,4 +1,4 @@
-package com.techai.shiftme.ui.customer.sendrequest;
+package com.techai.shiftme.ui.customer.home.tabs.sendrequest;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -45,7 +45,6 @@ import com.techai.shiftme.R;
 import com.techai.shiftme.databinding.ActivityMapBinding;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
-import com.techai.shiftme.utils.ToastUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;

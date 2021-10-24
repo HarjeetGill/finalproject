@@ -1,5 +1,6 @@
-package com.techai.shiftme.ui.customer.sendrequest;
+package com.techai.shiftme.ui.customer.home.tabs.sendrequest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;

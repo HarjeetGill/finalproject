@@ -1,10 +1,9 @@
-package com.techai.shiftme.ui.customer.sendrequest;
+package com.techai.shiftme.ui.customer.home.tabs.sendrequest;
 
 import android.app.Application;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.TimePicker;
 
@@ -126,12 +125,19 @@ public class SendRequestViewModel extends AndroidViewModel {
         }
     }
     public void openDatePicker(Context context) {
+
+        int calYear = myCalendar.get(Calendar.YEAR);
+        int calMonth = myCalendar.get(Calendar.MONTH);
+        int calDay = myCalendar.get(Calendar.DAY_OF_MONTH);
+
         DatePickerDialog datePickerDialog = new DatePickerDialog(context, (view, year, monthOfYear, dayOfMonth) -> {
             String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
             date.setValue(selectedDate);
             errorDate.postValue("");
 
-        }, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+        }, calYear,calMonth, calDay);
+        myCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        datePickerDialog.getDatePicker().setMinDate( myCalendar.getTimeInMillis());
         datePickerDialog.show();
     }
 
