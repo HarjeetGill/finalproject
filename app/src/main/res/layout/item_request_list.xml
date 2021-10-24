@@ -67,7 +67,6 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/_10sdp"
         android:src="@drawable/ic_email"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ivPhone"
         app:layout_constraintTop_toBottomOf="@+id/tvDateNTime" />
 
@@ -77,9 +76,41 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/_10sdp"
         android:src="@drawable/ic_phone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivTrack"
+        app:layout_constraintTop_toBottomOf="@+id/tvDateNTime" />
+
+    <ImageView
+        android:id="@+id/ivTrack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/ic_track"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDateNTime" />
+
+    <ImageView
+        android:id="@+id/ivApprove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/ic_approve"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivReject"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivEmail" />
+
+    <ImageView
+        android:id="@+id/ivReject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/ic_reject"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivApprove"
+        app:layout_constraintTop_toBottomOf="@+id/ivEmail" />
 
     <View
         android:id="@+id/vHorizontalLine"
@@ -89,6 +120,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPhone" />
+        app:layout_constraintTop_toBottomOf="@+id/ivReject" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

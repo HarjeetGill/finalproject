@@ -30,7 +30,7 @@ public class RequestsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentRequestsBinding.inflate(inflater, container, false);
-        viewModel = new ViewModelProvider(this, new LoginViewModelFactory(getActivity().getApplication())).get(RequestsViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity(), new LoginViewModelFactory(getActivity().getApplication())).get(RequestsViewModel.class);
         return binding.getRoot();
     }
 
@@ -47,7 +47,7 @@ public class RequestsFragment extends Fragment {
     }
 
     private void setAdapter() {
-        final RequestsPagerAdapter adapter = new RequestsPagerAdapter(requireContext(), requireActivity().getSupportFragmentManager(), binding.tabLayout.getTabCount());
+        final RequestsPagerAdapter adapter = new RequestsPagerAdapter(requireContext(), getChildFragmentManager(), binding.tabLayout.getTabCount());
         binding.viewPager.setAdapter(adapter);
     }
 
