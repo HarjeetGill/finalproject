@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,7 +22,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.techai.shiftme.data.model.Request;
 import com.techai.shiftme.databinding.FragmentNewRequestsTabBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
+import com.techai.shiftme.ui.agency.home.RequestsViewModel;
 import com.techai.shiftme.ui.agency.home.tabs.RequestsListAdapter;
+import com.techai.shiftme.ui.auth.login.LoginViewModelFactory;
+import com.techai.shiftme.ui.customer.home.CustomerRequestsViewModel;
+import com.techai.shiftme.ui.customer.home.tabs.sendrequest.SendRequestViewModel;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 
@@ -29,6 +35,7 @@ import java.util.ArrayList;
 public class SendRequestListFragment extends Fragment {
 
     private FragmentNewRequestsTabBinding binding;
+    private SendRequestViewModel viewModel;
     private SendRequestsAdapter adapter = null;
     private ArrayList<Request> requestList = null;
     private CollectionReference collectionRef = null;
@@ -39,6 +46,7 @@ public class SendRequestListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentNewRequestsTabBinding.inflate(inflater, container, false);
+        viewModel = new ViewModelProvider(requireActivity(), new LoginViewModelFactory(getActivity().getApplication())).get(SendRequestViewModel.class);
         return binding.getRoot();
     }
 
@@ -49,7 +57,18 @@ public class SendRequestListFragment extends Fragment {
         requestList = new ArrayList<>();
         setUpAdapter();
         getAllRequests();
+        setUpObserver();
+    }
 
+    private void setUpObserver() {
+        viewModel.requestSent.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    getAllRequests();
+                }
+            }
+        });
     }
 
     private void getAllRequests() {

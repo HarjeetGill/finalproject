@@ -65,8 +65,11 @@ public class SendRequestsAdapter extends RecyclerView.Adapter<SendRequestsAdapte
             binding.tvDateNTime.setText(String.format(binding.getRoot().getContext().getString(R.string.date_time_for_pick), request.getDateAndTime().split(Constants.DATE_TIME_SEPARATOR)[0], request.getDateAndTime().split(Constants.DATE_TIME_SEPARATOR)[1]));
             binding.tvRequestByUserName.setText(String.format(binding.getRoot().getContext().getString(R.string.approved_by), request.getDateAndTime()));
             binding.tvStatus.setText(request.getStatus());
-            binding.ivEmail.setVisibility(View.GONE);
-            binding.ivPhone.setVisibility(View.GONE);
+            binding.ivEmail.setVisibility(View.INVISIBLE);
+            binding.ivPhone.setVisibility(View.INVISIBLE);
+            binding.ivTrack.setVisibility(View.INVISIBLE);
+            binding.ivApprove.setVisibility(View.INVISIBLE);
+            binding.ivReject.setVisibility(View.INVISIBLE);
            /* binding.ivEmail.setOnClickListener(view -> {
                 openEmail("");
             });

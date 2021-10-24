@@ -44,8 +44,12 @@ public class SendRequestViewModel extends AndroidViewModel {
     public boolean isAllFieldsValid = true;
     public Request request = null;
     public SingleLiveEvent<Request> shiftRequest = new SingleLiveEvent<Request>();
+    public MutableLiveData<Boolean> requestSent = new MutableLiveData<>();
 
     private final Calendar myCalendar = Calendar.getInstance();
+    private final int calYear = myCalendar.get(Calendar.YEAR);
+    private final int calMonth = myCalendar.get(Calendar.MONTH);
+    private final int calDay = myCalendar.get(Calendar.DAY_OF_MONTH);
 
     public SendRequestViewModel(@NonNull Application application) {
         super(application);
@@ -127,11 +131,6 @@ public class SendRequestViewModel extends AndroidViewModel {
     }
 
     public void openDatePicker(Context context) {
-
-        int calYear = myCalendar.get(Calendar.YEAR);
-        int calMonth = myCalendar.get(Calendar.MONTH);
-        int calDay = myCalendar.get(Calendar.DAY_OF_MONTH);
-
         DatePickerDialog datePickerDialog = new DatePickerDialog(context, (view, year, monthOfYear, dayOfMonth) -> {
             String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
             date.setValue(selectedDate);

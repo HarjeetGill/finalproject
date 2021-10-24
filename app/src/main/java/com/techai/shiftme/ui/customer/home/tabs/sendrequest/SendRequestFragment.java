@@ -35,6 +35,7 @@ import com.techai.shiftme.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class SendRequestFragment extends Fragment implements View.OnClickListener {
@@ -86,6 +87,7 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         AppProgressUtil.INSTANCE.closeOldProgressDialog();
+                        sendRequestViewModel.requestSent.postValue(true);
                         if (task.isSuccessful()) {
                             ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Successfully Request Submitted");
                             adapter.clearList();
@@ -102,6 +104,8 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
         binding.ivAdd.setOnClickListener(this);
         binding.etDate.setOnClickListener(v -> sendRequestViewModel.openDatePicker(requireContext()));
         binding.etTime.setOnClickListener(v -> sendRequestViewModel.openTimePicker(requireContext()));
+        binding.etPicLocation.setOnClickListener(v -> startActivity(new Intent(requireActivity(), MapActivity.class)));
+        binding.etDestinationLocation.setOnClickListener(v -> startActivity(new Intent(requireActivity(), MapActivity.class)));
     }
 
     private void setUpAdapter() {

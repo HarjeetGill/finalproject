@@ -88,9 +88,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/location_to_pick"
                     android:text="@={viewModel.pickLocation}"
-                    android:clickable="false"
                     android:cursorVisible="false"
-                    android:enabled="false"
+                    android:enabled="true"
                     android:focusable="false"
                     android:inputType="text"
                     android:textColor="@color/colorText"
@@ -118,10 +117,9 @@
                     android:hint="@string/destination_location"
                     android:inputType="text"
                     android:text="@={viewModel.destinationLocation}"
-                    android:clickable="false"
                     android:cursorVisible="false"
                     android:focusable="false"
-                    android:enabled="false"
+                    android:enabled="true"
                     android:textColor="@color/colorText"
                     android:textColorHint="@color/colorHint" />
             </com.google.android.material.textfield.TextInputLayout>
