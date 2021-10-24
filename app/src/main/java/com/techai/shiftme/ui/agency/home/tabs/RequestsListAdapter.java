@@ -96,6 +96,12 @@ public class RequestsListAdapter extends RecyclerView.Adapter<RequestsListAdapte
                 }
             });
 
+            binding.ivTrack.setOnClickListener(view -> {
+                if (!request.getStatus().equals(Constants.REJECTED_REQUEST)) {
+                    openTrack();
+                }
+            });
+
             binding.ivApprove.setOnClickListener(view -> {
                 iApproveRejectListener.updateStatus(true, getAdapterPosition());
             });
@@ -103,6 +109,10 @@ public class RequestsListAdapter extends RecyclerView.Adapter<RequestsListAdapte
             binding.ivReject.setOnClickListener(view -> {
                 iApproveRejectListener.updateStatus(false, getAdapterPosition());
             });
+
+        }
+
+        public void openTrack() {
 
         }
 
