@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -61,6 +62,12 @@ public class SendRequestListFragment extends Fragment {
     }
 
     private void setUpObserver() {
+        binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getAllRequests();
+            }
+        });
         viewModel.requestSent.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -72,6 +79,7 @@ public class SendRequestListFragment extends Fragment {
     }
 
     private void getAllRequests() {
+        requestList.clear();
         AppProgressUtil.INSTANCE.showOldProgressDialog(requireContext());
         collectionRef = db.collection(Constants.REQUESTS);
         collectionRef
@@ -81,6 +89,7 @@ public class SendRequestListFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         AppProgressUtil.INSTANCE.closeOldProgressDialog();
+                        binding.swipeRefresh.setRefreshing(false);
                         if(task.isSuccessful()){
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 request = new Request();
