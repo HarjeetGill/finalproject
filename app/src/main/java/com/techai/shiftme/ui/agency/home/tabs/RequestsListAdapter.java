@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.techai.shiftme.R;
 import com.techai.shiftme.data.model.Request;
 import com.techai.shiftme.databinding.ItemRequestListBinding;
+import com.techai.shiftme.ui.agency.track.TrackActivity;
 import com.techai.shiftme.utils.Constants;
 
 import java.util.ArrayList;
@@ -113,7 +114,8 @@ public class RequestsListAdapter extends RecyclerView.Adapter<RequestsListAdapte
         }
 
         public void openTrack() {
-
+            Intent intent = new Intent(activity, TrackActivity.class);
+            activity.startActivity(intent);
         }
 
         public void openEmail(String email) {

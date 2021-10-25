@@ -33,6 +33,8 @@
             android:exported="true"/>
         <activity android:name=".ui.customer.home.tabs.sendrequest.MapActivity"
             android:exported="true"/>
+        <activity android:name=".ui.agency.track.TrackActivity"
+            android:exported="true"/>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
