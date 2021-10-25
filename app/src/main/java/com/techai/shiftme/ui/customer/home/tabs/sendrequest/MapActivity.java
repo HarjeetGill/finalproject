@@ -45,6 +45,7 @@ import com.techai.shiftme.R;
 import com.techai.shiftme.databinding.ActivityMapBinding;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
+import com.techai.shiftme.utils.ToastUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private ActivityMapBinding binding;
     private GoogleMap mMap;
     private Location lastLocation;
+    private String selectedPlaceName;
     private FusedLocationProviderClient fusedLocationClient;
     private List<Place.Field> placeFields;
     private PlacesClient placesClient;
@@ -72,6 +74,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         binding = ActivityMapBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setUpGoogleMap();
+        setOnClickListener();
+    }
+
+    private void setOnClickListener() {
+        binding.btnSaveLocation.setOnClickListener(v -> {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra(Constants.MAP_ADDRESS, selectedPlaceName);
+            returnIntent.putExtra(Constants.LOCATION_LATITUDE, lastLocation.getLatitude());
+            returnIntent.putExtra(Constants.LOCATION_LONGITUDE, lastLocation.getLatitude());
+            setResult(RESULT_OK, returnIntent);
+            finish();
+        });
     }
 
     private void setUpGoogleMap() {
@@ -139,6 +153,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         }
                         lastLocation.setLatitude(Objects.requireNonNull(place.getLatLng()).latitude);
                         lastLocation.setLongitude(place.getLatLng().longitude);
+                        selectedPlaceName=name;
                         mMap.clear();
                         addMarker(false, name);
                         //fromLocationGetAddress(lastLocation)
@@ -254,7 +269,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void setAddress(String address) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(Constants.MAP_ADDRESS, address);
-        setResult(RESULT_OK, returnIntent);
+       // setResult(RESULT_OK, returnIntent);
+        //finish();
     }
 
     private void addMarker(Boolean isCurrentLocation, String placeName) {
@@ -267,26 +283,4 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(latLng).title(getString(R.string.tv_current_location)));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f));
     }
-
-    /**
-     * Prompts the user for permission to use the device location.
-     */
-    /* private void getLocationPermission() {
-
-     *//*Request location permission, so that we can get the location of the
-      device. The result of the permission request is handled by a callback,
-      onRequestPermissionsResult.*//*
-
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            locationPermissionGranted = true;
-        } else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-        }
-    }*/
-
-
 }

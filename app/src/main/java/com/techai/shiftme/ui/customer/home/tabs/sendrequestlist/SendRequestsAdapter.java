@@ -63,20 +63,32 @@ public class SendRequestsAdapter extends RecyclerView.Adapter<SendRequestsAdapte
             binding.tvListOfItems.setText(String.format(binding.getRoot().getContext().getString(R.string.list_of_items_to_move), TextUtils.join(", ", request.getItemsToShift())));
             binding.tvDistance.setText(String.format(binding.getRoot().getContext().getString(R.string.estimated_distance), request.getDateAndTime()));
             binding.tvDateNTime.setText(String.format(binding.getRoot().getContext().getString(R.string.date_time_for_pick), request.getDateAndTime().split(Constants.DATE_TIME_SEPARATOR)[0], request.getDateAndTime().split(Constants.DATE_TIME_SEPARATOR)[1]));
-            binding.tvRequestByUserName.setText(String.format(binding.getRoot().getContext().getString(R.string.approved_by), request.getDateAndTime()));
             binding.tvStatus.setText(request.getStatus());
-            binding.ivEmail.setVisibility(View.INVISIBLE);
-            binding.ivPhone.setVisibility(View.INVISIBLE);
-            binding.ivTrack.setVisibility(View.INVISIBLE);
-            binding.ivApprove.setVisibility(View.INVISIBLE);
-            binding.ivReject.setVisibility(View.INVISIBLE);
-           /* binding.ivEmail.setOnClickListener(view -> {
-                openEmail("");
+            if(request.getStatus().equals(Constants.APPROVED_REQUEST)){
+                binding.tvRequestByUserName.setText(String.format(binding.getRoot().getContext().getString(R.string.approved_by), request.getAgencyDetails().getFullName()));
+                binding.ivEmail.setVisibility(View.VISIBLE);
+                binding.ivTrack.setVisibility(View.VISIBLE);
+                binding.ivPhone.setVisibility(View.VISIBLE);
+            }else{
+                binding.tvRequestByUserName.setVisibility(View.GONE);
+                binding.ivEmail.setVisibility(View.INVISIBLE);
+                binding.ivPhone.setVisibility(View.INVISIBLE);
+                binding.ivTrack.setVisibility(View.INVISIBLE);
+            }
+            binding.ivApprove.setVisibility(View.GONE);
+            binding.ivReject.setVisibility(View.GONE);
+
+            binding.ivEmail.setOnClickListener(view -> {
+                if(request.getAgencyDetails()!=null){
+                    openEmail(request.getAgencyDetails().getEmailId());
+                }
             });
 
             binding.ivPhone.setOnClickListener(view -> {
-                openCall("");
-            });*/
+                if(request.getAgencyDetails()!=null){
+                    openCall(request.getAgencyDetails().getPhoneNumber());
+                }
+            });
 
         }
 

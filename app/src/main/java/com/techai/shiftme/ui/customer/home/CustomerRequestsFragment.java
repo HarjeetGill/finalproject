@@ -14,18 +14,19 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.techai.shiftme.databinding.FragmentRequestsBinding;
 import com.techai.shiftme.ui.auth.login.LoginViewModelFactory;
+import com.techai.shiftme.ui.customer.home.tabs.sendrequest.SendRequestViewModel;
 
 public class CustomerRequestsFragment extends Fragment {
 
     private FragmentRequestsBinding binding;
-    private CustomerRequestsViewModel viewModel;
+    private SendRequestViewModel viewModel;
     private FirebaseFirestore db = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentRequestsBinding.inflate(inflater, container, false);
-        viewModel = new ViewModelProvider(this, new LoginViewModelFactory(getActivity().getApplication())).get(CustomerRequestsViewModel.class);
+        viewModel = new ViewModelProvider(this, new LoginViewModelFactory(getActivity().getApplication())).get(SendRequestViewModel.class);
         return binding.getRoot();
     }
 

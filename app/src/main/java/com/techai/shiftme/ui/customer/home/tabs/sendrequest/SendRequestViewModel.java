@@ -44,7 +44,7 @@ public class SendRequestViewModel extends AndroidViewModel {
     public boolean isAllFieldsValid = true;
     public Request request = null;
     public SingleLiveEvent<Request> shiftRequest = new SingleLiveEvent<Request>();
-    public MutableLiveData<Boolean> requestSent = new MutableLiveData<>();
+    public MutableLiveData<Boolean> requestSent = new MutableLiveData<>(false);
 
     private final Calendar myCalendar = Calendar.getInstance();
     private final int calYear = myCalendar.get(Calendar.YEAR);

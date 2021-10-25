@@ -37,6 +37,10 @@ public final class Constants {
     public static final String REJECTED_REQUEST = "Rejected";
     @NotNull
     public static final String DATE_TIME_SEPARATOR = ", ";
+    @NotNull
+    public static final String LOCATION_LATITUDE = "Latitude" ;
+    @NotNull
+    public static final String LOCATION_LONGITUDE = "Longitude" ;
 
 
     private Constants() {

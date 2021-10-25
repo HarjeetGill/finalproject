@@ -1,5 +1,7 @@
 package com.techai.shiftme.ui.customer.home.tabs.sendrequest;
 
+import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -26,7 +28,7 @@ import com.techai.shiftme.BR;
 import com.techai.shiftme.R;
 import com.techai.shiftme.data.model.Request;
 import com.techai.shiftme.databinding.FragmentSendRequestBinding;
-import com.techai.shiftme.preferences.SharedPrefUtils;
+import com.techai.shiftme.ui.auth.login.LoginViewModelFactory;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ShiftMeUtils;
@@ -35,7 +37,6 @@ import com.techai.shiftme.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class SendRequestFragment extends Fragment implements View.OnClickListener {
@@ -47,10 +48,11 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
     private List<String> itemList = new ArrayList<>();
     private String selectedVehicle;
     private FirebaseFirestore db = null;
+    private int PICK_LOCATION_REQUEST_CODE = 11, DESTINATION_LOCATION_REQUEST_CODE=21;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        sendRequestViewModel = new ViewModelProvider(this).get(SendRequestViewModel.class);
+        sendRequestViewModel = new ViewModelProvider(requireActivity(), new LoginViewModelFactory(getActivity().getApplication())).get(SendRequestViewModel.class);
         binding = FragmentSendRequestBinding.inflate(inflater, container, false);
         binding.setLifecycleOwner(this);
         binding.setVariable(BR.viewModel, sendRequestViewModel);
@@ -104,8 +106,28 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
         binding.ivAdd.setOnClickListener(this);
         binding.etDate.setOnClickListener(v -> sendRequestViewModel.openDatePicker(requireContext()));
         binding.etTime.setOnClickListener(v -> sendRequestViewModel.openTimePicker(requireContext()));
-        binding.etPicLocation.setOnClickListener(v -> startActivity(new Intent(requireActivity(), MapActivity.class)));
-        binding.etDestinationLocation.setOnClickListener(v -> startActivity(new Intent(requireActivity(), MapActivity.class)));
+        binding.etPicLocation.setOnClickListener(v -> startActivityForResult(new Intent(requireActivity(), MapActivity.class),PICK_LOCATION_REQUEST_CODE));
+        binding.etDestinationLocation.setOnClickListener(v -> startActivityForResult(new Intent(requireActivity(), MapActivity.class),DESTINATION_LOCATION_REQUEST_CODE));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_LOCATION_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // get the location from intent
+            if(data.getExtras()!=null && data.hasExtra(Constants.MAP_ADDRESS)){
+                String selectedPlaceName = data.getExtras().getString(Constants.MAP_ADDRESS);
+                Double latitude = data.getExtras().getDouble(Constants.LOCATION_LATITUDE);
+                Double longitude = data.getExtras().getDouble(Constants.LOCATION_LONGITUDE);
+            }
+        } else if (requestCode == DESTINATION_LOCATION_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // get the location from intent
+            if(data.getExtras()!=null && data.hasExtra(Constants.MAP_ADDRESS)){
+                String selectedPlaceName = data.getExtras().getString(Constants.MAP_ADDRESS);
+                Double latitude = data.getExtras().getDouble(Constants.LOCATION_LATITUDE);
+                Double longitude = data.getExtras().getDouble(Constants.LOCATION_LONGITUDE);
+            }
+        }
     }
 
     private void setUpAdapter() {
@@ -113,7 +135,6 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
         adapter = new AddItemsAdapter();
         binding.rvItems.setAdapter(adapter);
     }
-
 
     private void setUpViews() {
         binding.ivAdd.setEnabled(false);
