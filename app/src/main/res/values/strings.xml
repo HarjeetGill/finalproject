@@ -24,7 +24,7 @@
     <string name="tv_save">Save</string>
 
     <string-array name="userRoles">
-        <item>Cust0omer</item>
+        <item>Customer</item>
         <item>Agency</item>
     </string-array>
 
