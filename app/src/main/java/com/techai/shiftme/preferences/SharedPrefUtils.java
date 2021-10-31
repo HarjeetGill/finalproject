@@ -112,4 +112,8 @@ public class SharedPrefUtils {
         editor.apply();
     }
 
+    static public void clearData(Context context){
+        context.getSharedPreferences(PREF_APP, Context.MODE_PRIVATE).edit().clear().apply();
+    }
+
 }

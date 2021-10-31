@@ -43,12 +43,13 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
 
     private SendRequestViewModel sendRequestViewModel;
     private FragmentSendRequestBinding binding;
-    private final Calendar myCalendar = Calendar.getInstance();
     private AddItemsAdapter adapter;
     private List<String> itemList = new ArrayList<>();
     private String selectedVehicle;
     private FirebaseFirestore db = null;
     private int PICK_LOCATION_REQUEST_CODE = 11, DESTINATION_LOCATION_REQUEST_CODE=21;
+    private Double pickLatitude, pickLongitude, destinationLatitude,destinationLongitude;
+    private String pickLocation,destinationLocation;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -116,16 +117,19 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
         if (requestCode == PICK_LOCATION_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // get the location from intent
             if(data.getExtras()!=null && data.hasExtra(Constants.MAP_ADDRESS)){
-                String selectedPlaceName = data.getExtras().getString(Constants.MAP_ADDRESS);
-                Double latitude = data.getExtras().getDouble(Constants.LOCATION_LATITUDE);
-                Double longitude = data.getExtras().getDouble(Constants.LOCATION_LONGITUDE);
+                pickLocation= data.getExtras().getString(Constants.MAP_ADDRESS);
+                pickLatitude = data.getExtras().getDouble(Constants.LOCATION_LATITUDE);
+                pickLongitude = data.getExtras().getDouble(Constants.LOCATION_LONGITUDE);
+                sendRequestViewModel.setPickLocation(pickLocation, pickLatitude, pickLongitude);
             }
         } else if (requestCode == DESTINATION_LOCATION_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // get the location from intent
             if(data.getExtras()!=null && data.hasExtra(Constants.MAP_ADDRESS)){
-                String selectedPlaceName = data.getExtras().getString(Constants.MAP_ADDRESS);
-                Double latitude = data.getExtras().getDouble(Constants.LOCATION_LATITUDE);
-                Double longitude = data.getExtras().getDouble(Constants.LOCATION_LONGITUDE);
+                destinationLocation = data.getExtras().getString(Constants.MAP_ADDRESS);
+                destinationLatitude = data.getExtras().getDouble(Constants.LOCATION_LATITUDE);
+                destinationLongitude = data.getExtras().getDouble(Constants.LOCATION_LONGITUDE);
+
+                sendRequestViewModel.setDestinationLocation(destinationLocation, destinationLatitude, destinationLongitude);
             }
         }
     }
