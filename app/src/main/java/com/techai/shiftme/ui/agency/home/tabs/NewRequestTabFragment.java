@@ -146,7 +146,7 @@ public class NewRequestTabFragment extends Fragment implements IApproveRejectLis
         AppProgressUtil.INSTANCE.showOldProgressDialog(requireContext());
         docRef = collectionRef.document(requestList.get(position).getRequestId());
         docRef.update("agencyUpdates", FieldValue.arrayUnion(new AgencyModel(SharedPrefUtils.getStringData(requireContext(), Constants.FIREBASE_ID), Constants.REJECTED_REQUEST)),
-                "agencyFirebaseIds", FieldValue.arrayUnion(SharedPrefUtils.getStringData(requireContext(), Constants.FIREBASE_ID)))
+                "agencyFirebaseIds", FieldValue.arrayUnion(SharedPrefUtils.getStringData(requireContext(), Constants.FIREBASE_ID)), "status", Constants.REJECTED_REQUEST)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

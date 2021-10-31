@@ -62,7 +62,8 @@ public class ApprovedRejectedTabFragment extends Fragment implements IApproveRej
         filterStatusList = new ArrayList<>();
 
         filterStatusList.add(Constants.APPROVED_REQUEST);
-        filterStatusList.add(Constants.PENDING_REQUEST);
+//        filterStatusList.add(Constants.PENDING_REQUEST);
+        filterStatusList.add(Constants.REJECTED_REQUEST);
 
         setUpAdapter();
         getAllRequests();
@@ -105,13 +106,13 @@ public class ApprovedRejectedTabFragment extends Fragment implements IApproveRej
                                 request = new Request();
                                 request = document.toObject(Request.class);
                                 request.setRequestId(document.getId());
-                                if (request.getAgencyFirebaseIds().contains(SharedPrefUtils.getStringData(requireContext(), Constants.FIREBASE_ID)) ||
-                                        request.getAgencyFirebaseId().equals(SharedPrefUtils.getStringData(requireContext(), Constants.FIREBASE_ID))) {
-                                    if (request.getStatus().equals(Constants.PENDING_REQUEST)) {
-                                        request.setStatus(Constants.REJECTED_REQUEST);
-                                    }
-                                    requestList.add(request);
-                                }
+//                                if (request.getAgencyFirebaseIds().contains(SharedPrefUtils.getStringData(requireContext(), Constants.FIREBASE_ID)) ||
+//                                        request.getAgencyFirebaseId().equals(SharedPrefUtils.getStringData(requireContext(), Constants.FIREBASE_ID))) {
+//                                    if (request.getStatus().equals(Constants.PENDING_REQUEST)) {
+//                                        request.setStatus(Constants.REJECTED_REQUEST);
+//                                    }
+//                                }
+                                requestList.add(request);
                             }
                             if (requestList.isEmpty()) {
                                 binding.rvRequests.setVisibility(View.GONE);
