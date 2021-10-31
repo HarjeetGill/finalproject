@@ -1,5 +1,6 @@
 package com.techai.shiftme.ui.agency.home.tabs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.techai.shiftme.data.model.SignUpModel;
 import com.techai.shiftme.databinding.FragmentNewRequestsTabBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
 import com.techai.shiftme.ui.agency.home.RequestsViewModel;
+import com.techai.shiftme.ui.agency.track.TrackActivity;
 import com.techai.shiftme.ui.auth.login.LoginViewModelFactory;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
@@ -132,6 +134,11 @@ public class NewRequestTabFragment extends Fragment implements IApproveRejectLis
         } else {
             onRejectingRequest(position);
         }
+    }
+
+    @Override
+    public void sendToTracking(Request request) {
+
     }
 
     private void onRejectingRequest(int position) {

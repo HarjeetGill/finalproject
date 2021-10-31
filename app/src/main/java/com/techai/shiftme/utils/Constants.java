@@ -43,6 +43,8 @@ public final class Constants {
     public static final String LOCATION_LATITUDE = "Latitude" ;
     @NotNull
     public static final String LOCATION_LONGITUDE = "Longitude" ;
+    @NotNull
+    public static final String SEND_REQUEST_TO_TRACK = "SEND_REQUEST_TO_TRACK" ;
 
 
     private Constants() {

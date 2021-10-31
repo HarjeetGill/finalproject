@@ -1,5 +1,9 @@
 package com.techai.shiftme.data.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Request(
     var itemsToShift: ArrayList<String> = arrayListOf(),
     var agencyFirebaseIds: ArrayList<String> = arrayListOf(),
@@ -19,14 +23,16 @@ data class Request(
     var agencyFirebaseId: String = "",
     var userDetails: SignUpModel? = null,
     var agencyDetails: SignUpModel? = null
-)
+) : Parcelable
 
+@Parcelize
 data class AgencyModel(
     var firebaseId: String = "",
     var status: String = ""
-)
+) : Parcelable
 
+@Parcelize
 data class LocationUpdates(
     var latitude: Double = 0.0,
     var longitude: Double = 0.0
-)
+) : Parcelable

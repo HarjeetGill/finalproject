@@ -40,6 +40,7 @@ import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.techai.shiftme.R;
 import com.techai.shiftme.data.model.LocationUpdates;
+import com.techai.shiftme.data.model.Request;
 import com.techai.shiftme.databinding.ActivityTrackBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
 import com.techai.shiftme.utils.Constants;
@@ -61,6 +62,7 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
     private LocationUpdates locationUpdates;
     private DatabaseReference dbReference;
     private String userId;
+    private Request request;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,8 +70,13 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = ActivityTrackBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        parseIntentExtras();
         setUpGoogleMap();
         setUpDb();
+    }
+
+    private void parseIntentExtras() {
+        request = getIntent().getParcelableExtra(Constants.SEND_REQUEST_TO_TRACK);
     }
 
     private void setUpDb() {
@@ -201,7 +208,7 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
         locationUpdates.setLatitude(location.getLatitude());
         locationUpdates.setLongitude(location.getLongitude());
         dbReference.child(userId).setValue(locationUpdates).addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
+            if (task.isSuccessful()) {
 
             }
         });

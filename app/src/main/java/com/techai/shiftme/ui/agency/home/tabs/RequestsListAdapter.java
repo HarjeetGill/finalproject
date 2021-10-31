@@ -75,12 +75,14 @@ public class RequestsListAdapter extends RecyclerView.Adapter<RequestsListAdapte
                 case Constants.PENDING_REQUEST: {
                     binding.ivReject.setVisibility(View.VISIBLE);
                     binding.ivApprove.setVisibility(View.VISIBLE);
+                    binding.ivTrack.setVisibility(View.GONE);
                     break;
                 }
                 case Constants.APPROVED_REQUEST:
                 case Constants.REJECTED_REQUEST: {
                     binding.ivReject.setVisibility(View.GONE);
                     binding.ivApprove.setVisibility(View.GONE);
+                    binding.ivTrack.setVisibility(View.VISIBLE);
                     break;
                 }
             }
@@ -99,7 +101,7 @@ public class RequestsListAdapter extends RecyclerView.Adapter<RequestsListAdapte
 
             binding.ivTrack.setOnClickListener(view -> {
                 if (!request.getStatus().equals(Constants.REJECTED_REQUEST)) {
-                    openTrack();
+                    openTrack(request);
                 }
             });
 
@@ -113,16 +115,15 @@ public class RequestsListAdapter extends RecyclerView.Adapter<RequestsListAdapte
 
         }
 
-        public void openTrack() {
-            Intent intent = new Intent(activity, TrackActivity.class);
-            activity.startActivity(intent);
-        }
-
         public void openEmail(String email) {
             Intent intent = new Intent(Intent.ACTION_SENDTO);
             intent.setData(Uri.parse("mailto:"));
             intent.putExtra(Intent.EXTRA_EMAIL, email);
             activity.startActivity(intent);
+        }
+
+        public void openTrack(Request request) {
+            iApproveRejectListener.sendToTracking(request);
         }
 
         public void openCall(String number) {
