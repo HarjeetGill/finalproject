@@ -34,6 +34,7 @@ import com.techai.shiftme.ui.agency.track.TrackActivity;
 import com.techai.shiftme.ui.auth.login.LoginViewModelFactory;
 import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
+import com.techai.shiftme.utils.ShiftMeUtils;
 import com.techai.shiftme.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -170,7 +171,7 @@ public class NewRequestTabFragment extends Fragment implements IApproveRejectLis
                 if (task.isSuccessful() && task.getResult() != null) {
                     request = new Request();
                     request = task.getResult().toObject(Request.class);
-                    if (request.getAgencyFirebaseId().isEmpty()) {
+                    if (!ShiftMeUtils.isNonEmptyNull(request.getAgencyFirebaseId())) {
                         docRef
                                 .update("status", Constants.APPROVED_REQUEST, "agencyFirebaseId", SharedPrefUtils.getStringData(requireContext(), Constants.FIREBASE_ID), "agencyDetails", SharedPrefUtils.getObject(requireContext(), Constants.SIGN_UP_MODEL, SignUpModel.class))
                                 .addOnCompleteListener(taskNew -> {

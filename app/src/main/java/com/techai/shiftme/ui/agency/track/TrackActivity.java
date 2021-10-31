@@ -25,12 +25,17 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.maps.DirectionsApi;
+import com.google.maps.GeoApiContext;
+import com.google.maps.android.PolyUtil;
+import com.google.maps.model.DirectionsRoute;
+import com.google.maps.model.TravelMode;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -48,6 +53,7 @@ import com.techai.shiftme.utils.Constants;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 
 public class TrackActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -63,6 +69,8 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
     private DatabaseReference dbReference;
     private String userId;
     private Request request;
+    private MarkerOptions markerOptions;
+    private Marker marker;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,13 +78,22 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = ActivityTrackBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        parseIntentExtras();
         setUpGoogleMap();
         setUpDb();
+        parseIntentExtras();
     }
 
     private void parseIntentExtras() {
         request = getIntent().getParcelableExtra(Constants.SEND_REQUEST_TO_TRACK);
+    }
+
+    private void addPickDestinationMarker() {
+        LatLng pickLatLng = new LatLng(request.getPickLatitude(), request.getPickLongitude());
+        LatLng destinationLatLng = new LatLng(request.getDestinationLatitude(), request.getDestinationLongitude());
+        mMap.addMarker(new MarkerOptions().position(pickLatLng).title(getString(R.string.pick_location)));
+        mMap.addMarker(new MarkerOptions().position(destinationLatLng).title(getString(R.string.destination_location)));
+        addPolyline(getDirections(pickLatLng, destinationLatLng, false));
+        addPolyline(getDirections(pickLatLng, destinationLatLng, true));
     }
 
     private void setUpDb() {
@@ -95,6 +112,48 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
             mapFragment.getMapAsync(this);
         }
 
+    }
+
+    private DirectionsRoute[] getDirections(LatLng origin, LatLng destination, boolean isDestination) {
+        com.google.maps.model.LatLng pickLatLng = new com.google.maps.model.LatLng(origin.latitude, origin.longitude);
+        com.google.maps.model.LatLng destinationLatLng = new com.google.maps.model.LatLng(destination.latitude, destination.longitude);
+        com.google.maps.model.LatLng currentLatLng = new com.google.maps.model.LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+        if (isDestination) {
+            try {
+                return DirectionsApi.newRequest(getGeoContext())
+                        .mode(TravelMode.DRIVING)
+                        .origin(pickLatLng)
+                        .destination(destinationLatLng)
+                        .await();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                return DirectionsApi.newRequest(getGeoContext())
+                        .mode(TravelMode.DRIVING)
+                        .origin(currentLatLng)
+                        .destination(pickLatLng)
+                        .await();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return new DirectionsRoute[0];
+    }
+
+    private GeoApiContext getGeoContext() {
+        GeoApiContext geoApiContext = new GeoApiContext();
+        return geoApiContext.setQueryRateLimit(3)
+                .setApiKey(getString(R.string.maps_api_key))
+                .setConnectTimeout(1, TimeUnit.SECONDS)
+                .setReadTimeout(1, TimeUnit.SECONDS)
+                .setWriteTimeout(1, TimeUnit.SECONDS);
+    }
+
+    private void addPolyline(DirectionsRoute[] results) {
+        List<LatLng> decodedPath = PolyUtil.decode(results[0].overviewPolyline.getEncodedPath());
+        mMap.addPolyline(new PolylineOptions().addAll(decodedPath));
     }
 
     @Override
@@ -159,6 +218,7 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
 
     @SuppressLint("MissingPermission")
     private void afterLocationGivenSetup() {
+
         // 1
         mMap.setMyLocationEnabled(true);
 
@@ -171,7 +231,12 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 // Location updates in here
+                lastLocation = locationResult.getLastLocation();
                 updateLocationOnServer(locationResult.getLastLocation());
+                if (marker != null) {
+                    marker.remove();
+                }
+                marker = mMap.addMarker(new MarkerOptions().position(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude())).title(getString(R.string.tv_current_location)));
                 super.onLocationResult(locationResult);
             }
 
@@ -185,17 +250,9 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                    if (lastLocation != null) {
-                        addMarker(true, "");
-                        return;
-                    }
                     lastLocation = location;
-                    addMarker(true, "");
-                    try {
-                        fromLocationGetAddress(location);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()), 12f));
+                    addPickDestinationMarker();
                 }
             }
         });
@@ -244,7 +301,8 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
                 mMap.addMarker(new MarkerOptions().position(latLng).title(placeName));
             }
         }
-        mMap.addMarker(new MarkerOptions().position(latLng).title(getString(R.string.tv_current_location)));
+        markerOptions = new MarkerOptions().position(latLng).title(getString(R.string.tv_current_location));
+        marker = mMap.addMarker(markerOptions);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f));
     }
 

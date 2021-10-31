@@ -69,6 +69,8 @@ public class RequestsListAdapter extends RecyclerView.Adapter<RequestsListAdapte
             binding.tvDistance.setText(String.format(binding.getRoot().getContext().getString(R.string.estimated_distance), request.getDistance()));
             binding.tvDateNTime.setText(String.format(binding.getRoot().getContext().getString(R.string.date_time_for_pick), request.getDateAndTime().split(Constants.DATE_TIME_SEPARATOR)[0], request.getDateAndTime().split(Constants.DATE_TIME_SEPARATOR)[1]));
             binding.tvRequestByUserName.setText(String.format(binding.getRoot().getContext().getString(R.string.request_by), request.getUserDetails().getFullName()));
+            binding.tvPickLocation.setText(String.format(binding.getRoot().getContext().getString(R.string.set_pick_location), request.getPickLocation()));
+            binding.tvDestinationLocation.setText(String.format(binding.getRoot().getContext().getString(R.string.set_destination_location), request.getDestinationLocation()));
             binding.tvStatus.setText(request.getStatus());
 
             switch (request.getStatus()) {
@@ -78,11 +80,16 @@ public class RequestsListAdapter extends RecyclerView.Adapter<RequestsListAdapte
                     binding.ivTrack.setVisibility(View.GONE);
                     break;
                 }
-                case Constants.APPROVED_REQUEST:
-                case Constants.REJECTED_REQUEST: {
+                case Constants.APPROVED_REQUEST: {
                     binding.ivReject.setVisibility(View.GONE);
                     binding.ivApprove.setVisibility(View.GONE);
                     binding.ivTrack.setVisibility(View.VISIBLE);
+                    break;
+                }
+                case Constants.REJECTED_REQUEST: {
+                    binding.ivReject.setVisibility(View.GONE);
+                    binding.ivApprove.setVisibility(View.GONE);
+                    binding.ivTrack.setVisibility(View.GONE);
                     break;
                 }
             }
