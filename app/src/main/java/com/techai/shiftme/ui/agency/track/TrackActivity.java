@@ -29,8 +29,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.android.PolyUtil;
@@ -49,6 +52,7 @@ import com.techai.shiftme.data.model.Request;
 import com.techai.shiftme.databinding.ActivityTrackBinding;
 import com.techai.shiftme.preferences.SharedPrefUtils;
 import com.techai.shiftme.utils.Constants;
+import com.techai.shiftme.utils.ToastUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -71,6 +75,7 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
     private Request request;
     private MarkerOptions markerOptions;
     private Marker marker;
+    private Boolean isLocationAdded;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -222,6 +227,27 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
         // 1
         mMap.setMyLocationEnabled(true);
 
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    lastLocation = location;
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()), 12f));
+                    addPickDestinationMarker();
+                    if(request.getStatus().equals(Constants.APPROVED_REQUEST)){
+                        if(userId.equals(request.getAgencyFirebaseId())){
+                            requestLocationUpdates();
+                        } else {
+                            valueChangeListener(request.getAgencyFirebaseId());
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    @SuppressLint("MissingPermission")
+    private void requestLocationUpdates() {
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(500);
@@ -231,8 +257,8 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 // Location updates in here
-                lastLocation = locationResult.getLastLocation();
                 updateLocationOnServer(locationResult.getLastLocation());
+                lastLocation = locationResult.getLastLocation();
                 if (marker != null) {
                     marker.remove();
                 }
@@ -245,17 +271,6 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
                 super.onLocationAvailability(locationAvailability);
             }
         }, Looper.getMainLooper());
-
-        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    lastLocation = location;
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()), 12f));
-                    addPickDestinationMarker();
-                }
-            }
-        });
     }
 
     private void updateLocationOnServer(Location location) {
@@ -270,6 +285,20 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
             }
         });
 
+    }
+
+    private void valueChangeListener(String id) {
+        dbReference.child(id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ToastUtils.longCustomToast(getLayoutInflater(), binding.getRoot(), 0, snapshot.toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void fromLocationGetAddress(Location location) throws IOException {
