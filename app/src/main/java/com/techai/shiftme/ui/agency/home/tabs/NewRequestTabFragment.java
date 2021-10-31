@@ -34,7 +34,6 @@ import com.techai.shiftme.utils.AppProgressUtil;
 import com.techai.shiftme.utils.Constants;
 import com.techai.shiftme.utils.ToastUtils;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class NewRequestTabFragment extends Fragment implements IApproveRejectListener {
