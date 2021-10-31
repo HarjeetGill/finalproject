@@ -33,8 +33,12 @@ public class SendRequestViewModel extends AndroidViewModel {
     public MutableLiveData<String> time = new MutableLiveData<>("");
     public MutableLiveData<String> errorTime = new MutableLiveData<>("");
     public MutableLiveData<String> pickLocation = new MutableLiveData<>("");
+    public MutableLiveData<Double> pickLocationLatitude = new MutableLiveData<>(0.0);
+    public MutableLiveData<Double> pickLocationLongitude = new MutableLiveData<>(0.0);
     public MutableLiveData<String> errorPickLocation = new MutableLiveData<>("");
     public MutableLiveData<String> destinationLocation = new MutableLiveData<>("");
+    public MutableLiveData<Double> destinationLocationLatitude = new MutableLiveData<>(0.0);
+    public MutableLiveData<Double> destinationLocationLongitude = new MutableLiveData<>(0.0);
     public MutableLiveData<String> errorDestinationLocation = new MutableLiveData<>("");
     public MutableLiveData<String> vehicle = new MutableLiveData<>("");
     public MutableLiveData<List<String>> itemList = new MutableLiveData<>();
@@ -46,10 +50,6 @@ public class SendRequestViewModel extends AndroidViewModel {
     public SingleLiveEvent<Request> shiftRequest = new SingleLiveEvent<Request>();
     public MutableLiveData<Boolean> requestSent = new MutableLiveData<>(false);
 
-    private final Calendar myCalendar = Calendar.getInstance();
-    private final int calYear = myCalendar.get(Calendar.YEAR);
-    private final int calMonth = myCalendar.get(Calendar.MONTH);
-    private final int calDay = myCalendar.get(Calendar.DAY_OF_MONTH);
 
     public SendRequestViewModel(@NonNull Application application) {
         super(application);
@@ -58,12 +58,14 @@ public class SendRequestViewModel extends AndroidViewModel {
     public void onSendRequestClick(View view) {
         isAllFieldsValid = true;
         isItemsValid();
+        isPickLocationValid();
+        isDestinationLocationValid();
         isDateValid();
         isTimeValid();
         isNoOfMoversValid();
         if (isAllFieldsValid) {
-            request = new Request((ArrayList<String>) itemList.getValue(), new ArrayList<String>(), new ArrayList<AgencyModel>(), 0.0, 0.0, 0.0,
-                    0.0, date.getValue() + Constants.DATE_TIME_SEPARATOR + time.getValue(), "Small",
+            request = new Request((ArrayList<String>) itemList.getValue(), new ArrayList<String>(), new ArrayList<AgencyModel>(), pickLocation.getValue(), pickLocationLatitude.getValue(), pickLocationLongitude.getValue(), destinationLocation.getValue(), destinationLocationLatitude.getValue(),
+                    destinationLocationLongitude.getValue(), date.getValue() + Constants.DATE_TIME_SEPARATOR + time.getValue(), "Small",
                     "10 $", Integer.valueOf(Objects.requireNonNull(noOfMovers.getValue())), Constants.PENDING_REQUEST, "", SharedPrefUtils.getStringData(view.getContext(), Constants.FIREBASE_ID), "", "",
                     SharedPrefUtils.getObject(view.getContext(), Constants.SIGN_UP_MODEL, SignUpModel.class), null);
             shiftRequest.postValue(request);
@@ -131,18 +133,23 @@ public class SendRequestViewModel extends AndroidViewModel {
     }
 
     public void openDatePicker(Context context) {
+        Calendar myCalendar = Calendar.getInstance();
+        int calYear = myCalendar.get(Calendar.YEAR);
+        int calMonth = myCalendar.get(Calendar.MONTH);
+        int calDay = myCalendar.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog datePickerDialog = new DatePickerDialog(context, (view, year, monthOfYear, dayOfMonth) -> {
             String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
             date.setValue(selectedDate);
             errorDate.postValue("");
 
-        }, calYear,calMonth, calDay);
+        }, calYear, calMonth, calDay);
         myCalendar.add(Calendar.DAY_OF_YEAR, 1);
-        datePickerDialog.getDatePicker().setMinDate( myCalendar.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMinDate(myCalendar.getTimeInMillis());
         datePickerDialog.show();
     }
 
     public void openTimePicker(Context context) {
+        Calendar myCalendar = Calendar.getInstance();
         int hour = myCalendar.get(Calendar.HOUR_OF_DAY);
         int minute = myCalendar.get(Calendar.MINUTE);
         TimePickerDialog mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
@@ -161,8 +168,12 @@ public class SendRequestViewModel extends AndroidViewModel {
         time.postValue("");
         errorTime.postValue("");
         pickLocation.postValue("");
+        pickLocationLatitude.postValue(0.0);
+        pickLocationLongitude.postValue(0.0);
         errorPickLocation.postValue("");
         destinationLocation.postValue("");
+        destinationLocationLatitude.postValue(0.0);
+        destinationLocationLongitude.postValue(0.0);
         errorDestinationLocation.postValue("");
         vehicle.postValue("");
         itemList.postValue(new ArrayList<>());
@@ -172,4 +183,17 @@ public class SendRequestViewModel extends AndroidViewModel {
         isAllFieldsValid = false;
     }
 
+    public void setDestinationLocation(String destinationLocationName, Double destinationLatitude, Double destinationLongitude) {
+        destinationLocation.postValue(destinationLocationName);
+        destinationLocationLatitude.postValue(destinationLatitude);
+        destinationLocationLongitude.postValue(destinationLongitude);
+        errorDestinationLocation.postValue("");
+    }
+
+    public void setPickLocation(String pickLocationName, Double pickLatitude, Double pickLongitude) {
+        pickLocation.setValue(pickLocationName);
+        pickLocationLatitude.setValue(pickLatitude);
+        pickLocationLongitude.setValue(pickLongitude);
+        errorPickLocation.postValue("");
+    }
 }

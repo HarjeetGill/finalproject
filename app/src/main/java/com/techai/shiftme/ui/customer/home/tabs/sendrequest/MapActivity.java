@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -34,6 +35,7 @@ import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -203,7 +205,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void showSettingsDialog() {
-       /* new MaterialAlertDialogBuilder(this)
+      /*  new MaterialAlertDialogBuilder(this)
                 .setTitle()
                 .title(R.string.title)
                 .content(R.string.content)
@@ -211,6 +213,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         MaterialDialog dialog = builder.build();
         dialog.show();
+
         MaterialDialog(this).show {
             title(R.string.app_name)
             message(R.string.warn_permission_denied_location)
@@ -267,10 +270,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void setAddress(String address) {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra(Constants.MAP_ADDRESS, address);
-       // setResult(RESULT_OK, returnIntent);
-        //finish();
+        selectedPlaceName=address;
     }
 
     private void addMarker(Boolean isCurrentLocation, String placeName) {

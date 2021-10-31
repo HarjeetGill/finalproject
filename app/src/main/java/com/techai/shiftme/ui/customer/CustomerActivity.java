@@ -78,6 +78,7 @@ public class CustomerActivity extends AppCompatActivity {
                         AppProgressUtil.INSTANCE.closeOldProgressDialog();
                         startActivity(new Intent(CustomerActivity.this, AuthenticationActivity.class));
                         CustomerActivity.this.finish();
+                        SharedPrefUtils.clearData(CustomerActivity.this);
                     }
                 }, 1000);
                 return true;
