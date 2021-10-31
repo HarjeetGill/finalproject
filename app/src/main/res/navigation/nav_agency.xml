@@ -16,6 +16,11 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_contact_us"
+        android:name="com.techai.shiftme.ui.contactus.ContactUsFragment"
+        android:label="@string/menu_contact_us" />
+
+    <fragment
         android:id="@+id/nav_profile"
         android:name="com.techai.shiftme.ui.userprofile.UserProfileFragment"
         android:label="@string/menu_profile"

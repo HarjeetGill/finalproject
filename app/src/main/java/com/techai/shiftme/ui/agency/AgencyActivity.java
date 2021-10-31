@@ -47,7 +47,7 @@ public class AgencyActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_request_list, R.id.nav_profile)
+                R.id.nav_request_list,R.id.nav_contact_us, R.id.nav_profile)
                 .setOpenableLayout(drawer)
                 .build();
 

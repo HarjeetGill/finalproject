@@ -24,7 +24,7 @@
     <string name="tv_save">Save</string>
 
     <string-array name="userRoles">
-        <item>Cust0omer</item>
+        <item>Customer</item>
         <item>Agency</item>
     </string-array>
 
@@ -47,6 +47,7 @@
     <string name="menu_profile">User Profile</string>
     <string name="menu_customer_requests">Customer Requests</string>
     <string name="menu_requests">Requests</string>
+    <string name="menu_contact_us">Contact us</string>
     <string name="tv_user_profile">User Profile</string>
     <string name="tv_send_request">Send Request</string>
     <string name="enter_items_hint">Enter Items</string>

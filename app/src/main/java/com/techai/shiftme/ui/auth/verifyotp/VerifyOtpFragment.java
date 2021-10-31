@@ -301,14 +301,8 @@ public class VerifyOtpFragment extends Fragment {
                                             SharedPrefUtils.saveData(requireContext(), Constants.IS_LOGGED_IN, true);
                                             SharedPrefUtils.saveData(requireContext(), Constants.FIREBASE_ID, documentReference.getId());
                                             SharedPrefUtils.saveObject(requireContext(), Constants.SIGN_UP_MODEL, signUpModel);
-                                            ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, "Successfully logged in.");
-
-                                            if(signUpModel.getUserRole().equals(Constants.CUSTOMER_USER_ROLE)){
-                                                startActivity(new Intent(requireContext(), CustomerActivity.class));
-                                            } else {
-                                                startActivity(new Intent(requireContext(), AgencyActivity.class));
-                                            }
-                                            requireActivity().finish();
+                                            Navigation.findNavController(requireView())
+                                                    .navigate(R.id.loginFragment);
                                         } else {
                                             ToastUtils.longCustomToast(getLayoutInflater(), requireView(), 0, String.valueOf(task.getException()));
                                         }
