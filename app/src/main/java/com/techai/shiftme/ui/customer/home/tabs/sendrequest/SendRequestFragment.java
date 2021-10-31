@@ -128,7 +128,6 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
                 destinationLocation = data.getExtras().getString(Constants.MAP_ADDRESS);
                 destinationLatitude = data.getExtras().getDouble(Constants.LOCATION_LATITUDE);
                 destinationLongitude = data.getExtras().getDouble(Constants.LOCATION_LONGITUDE);
-
                 sendRequestViewModel.setDestinationLocation(destinationLocation, destinationLatitude, destinationLongitude);
             }
         }

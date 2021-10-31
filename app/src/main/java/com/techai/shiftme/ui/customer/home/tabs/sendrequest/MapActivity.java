@@ -84,7 +84,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             Intent returnIntent = new Intent();
             returnIntent.putExtra(Constants.MAP_ADDRESS, selectedPlaceName);
             returnIntent.putExtra(Constants.LOCATION_LATITUDE, lastLocation.getLatitude());
-            returnIntent.putExtra(Constants.LOCATION_LONGITUDE, lastLocation.getLatitude());
+            returnIntent.putExtra(Constants.LOCATION_LONGITUDE, lastLocation.getLongitude());
             setResult(RESULT_OK, returnIntent);
             finish();
         });
