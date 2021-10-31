@@ -191,9 +191,9 @@ public class SendRequestViewModel extends AndroidViewModel {
     }
 
     public void setPickLocation(String pickLocationName, Double pickLatitude, Double pickLongitude) {
-        pickLocation.setValue(pickLocationName);
-        pickLocationLatitude.setValue(pickLatitude);
-        pickLocationLongitude.setValue(pickLongitude);
+        pickLocation.postValue(pickLocationName);
+        pickLocationLatitude.postValue(pickLatitude);
+        pickLocationLongitude.postValue(pickLongitude);
         errorPickLocation.postValue("");
     }
 }
