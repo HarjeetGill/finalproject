@@ -291,7 +291,7 @@ public class TrackActivity extends AppCompatActivity implements OnMapReadyCallba
         dbReference.child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ToastUtils.longCustomToast(getLayoutInflater(), binding.getRoot(), 0, snapshot.toString());
+//                ToastUtils.longCustomToast(getLayoutInflater(), binding.getRoot(), 0, snapshot.toString());
             }
 
             @Override
