@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvDestinationLocation" />
 
     <TextView
-        android:id="@+id/tvDateNTime"
+        android:id="@+id/tvEstimatedCost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_5sdp"
@@ -70,6 +70,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDistance" />
+
+    <TextView
+        android:id="@+id/tvDateNTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEstimatedCost" />
 
     <TextView
         android:id="@+id/tvRequestByUserName"

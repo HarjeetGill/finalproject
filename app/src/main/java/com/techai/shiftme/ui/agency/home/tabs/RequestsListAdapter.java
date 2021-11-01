@@ -70,6 +70,7 @@ public class RequestsListAdapter extends RecyclerView.Adapter<RequestsListAdapte
             binding.tvDateNTime.setText(String.format(binding.getRoot().getContext().getString(R.string.date_time_for_pick), request.getDateAndTime().split(Constants.DATE_TIME_SEPARATOR)[0], request.getDateAndTime().split(Constants.DATE_TIME_SEPARATOR)[1]));
             binding.tvRequestByUserName.setText(String.format(binding.getRoot().getContext().getString(R.string.request_by), request.getUserDetails().getFullName()));
             binding.tvPickLocation.setText(String.format(binding.getRoot().getContext().getString(R.string.set_pick_location), request.getPickLocation()));
+            binding.tvEstimatedCost.setText(String.format(binding.getRoot().getContext().getString(R.string.set_estimated_cost), request.getCostOfShifting()));
             binding.tvDestinationLocation.setText(String.format(binding.getRoot().getContext().getString(R.string.set_destination_location), request.getDestinationLocation()));
             binding.tvStatus.setText(request.getStatus());
 

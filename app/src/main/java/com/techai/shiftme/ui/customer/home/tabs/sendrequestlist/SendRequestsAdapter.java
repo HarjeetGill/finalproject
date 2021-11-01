@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.techai.shiftme.R;
 import com.techai.shiftme.data.model.Request;
 import com.techai.shiftme.databinding.ItemRequestListBinding;
+import com.techai.shiftme.ui.agency.track.TrackActivity;
 import com.techai.shiftme.utils.Constants;
 
 import java.util.ArrayList;
@@ -61,17 +62,18 @@ public class SendRequestsAdapter extends RecyclerView.Adapter<SendRequestsAdapte
 
         public void onBind(Request request) {
             binding.tvListOfItems.setText(String.format(binding.getRoot().getContext().getString(R.string.list_of_items_to_move), TextUtils.join(", ", request.getItemsToShift())));
-            binding.tvDistance.setText(String.format(binding.getRoot().getContext().getString(R.string.estimated_distance), request.getDateAndTime()));
+            binding.tvDistance.setText(String.format(binding.getRoot().getContext().getString(R.string.estimated_distance), request.getDistance()));
             binding.tvDateNTime.setText(String.format(binding.getRoot().getContext().getString(R.string.date_time_for_pick), request.getDateAndTime().split(Constants.DATE_TIME_SEPARATOR)[0], request.getDateAndTime().split(Constants.DATE_TIME_SEPARATOR)[1]));
             binding.tvStatus.setText(request.getStatus());
             binding.tvPickLocation.setText(String.format(binding.getRoot().getContext().getString(R.string.set_pick_location), request.getPickLocation()));
+            binding.tvEstimatedCost.setText(String.format(binding.getRoot().getContext().getString(R.string.set_estimated_cost), request.getCostOfShifting()));
             binding.tvDestinationLocation.setText(String.format(binding.getRoot().getContext().getString(R.string.set_destination_location), request.getDestinationLocation()));
-            if(request.getStatus().equals(Constants.APPROVED_REQUEST)){
+            if (request.getStatus().equals(Constants.APPROVED_REQUEST)) {
                 binding.tvRequestByUserName.setText(String.format(binding.getRoot().getContext().getString(R.string.approved_by), request.getAgencyDetails().getFullName()));
                 binding.ivEmail.setVisibility(View.VISIBLE);
                 binding.ivTrack.setVisibility(View.VISIBLE);
                 binding.ivPhone.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 binding.tvRequestByUserName.setVisibility(View.GONE);
                 binding.ivEmail.setVisibility(View.INVISIBLE);
                 binding.ivPhone.setVisibility(View.INVISIBLE);
@@ -81,17 +83,27 @@ public class SendRequestsAdapter extends RecyclerView.Adapter<SendRequestsAdapte
             binding.ivReject.setVisibility(View.GONE);
 
             binding.ivEmail.setOnClickListener(view -> {
-                if(request.getAgencyDetails()!=null){
+                if (request.getAgencyDetails() != null) {
                     openEmail(request.getAgencyDetails().getEmailId());
                 }
             });
 
             binding.ivPhone.setOnClickListener(view -> {
-                if(request.getAgencyDetails()!=null){
+                if (request.getAgencyDetails() != null) {
                     openCall(request.getAgencyDetails().getPhoneNumber());
                 }
             });
 
+            binding.ivTrack.setOnClickListener(view -> {
+                openTrack(request);
+            });
+
+        }
+
+        public void openTrack(Request request) {
+            Intent intent = new Intent(activity, TrackActivity.class);
+            intent.putExtra(Constants.SEND_REQUEST_TO_TRACK, request);
+            activity.startActivity(intent);
         }
 
         public void openEmail(String email) {

@@ -76,6 +76,7 @@
     <string name="request_by">Request By: %1$s</string>
     <string name="approved_by">Approved By: %1$s</string>
     <string name="set_pick_location">Pick location: %1$s</string>
+    <string name="set_estimated_cost">Estimated cost: %1$s</string>
     <string name="set_destination_location">Destination location: %1$s</string>
     <string name="tv_no_data_available">No Data Available</string>
 

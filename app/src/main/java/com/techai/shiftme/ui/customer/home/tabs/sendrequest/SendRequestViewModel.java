@@ -65,7 +65,7 @@ public class SendRequestViewModel extends AndroidViewModel {
         isNoOfMoversValid();
         if (isAllFieldsValid) {
             request = new Request((ArrayList<String>) itemList.getValue(), new ArrayList<String>(), new ArrayList<AgencyModel>(), pickLocation.getValue(), pickLocationLatitude.getValue(), pickLocationLongitude.getValue(), destinationLocation.getValue(), destinationLocationLatitude.getValue(),
-                    destinationLocationLongitude.getValue(), date.getValue() + Constants.DATE_TIME_SEPARATOR + time.getValue(), "Small",
+                    destinationLocationLongitude.getValue(), date.getValue() + Constants.DATE_TIME_SEPARATOR + time.getValue(), vehicle.getValue(),
                     "10 $", Integer.valueOf(Objects.requireNonNull(noOfMovers.getValue())), Constants.PENDING_REQUEST, "", SharedPrefUtils.getStringData(view.getContext(), Constants.FIREBASE_ID), "", "",
                     SharedPrefUtils.getObject(view.getContext(), Constants.SIGN_UP_MODEL, SignUpModel.class), null);
             shiftRequest.postValue(request);

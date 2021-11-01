@@ -20,10 +20,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.maps.DirectionsApi;
+import com.google.maps.GeoApiContext;
+import com.google.maps.model.DirectionsRoute;
+import com.google.maps.model.TravelMode;
 import com.techai.shiftme.BR;
 import com.techai.shiftme.R;
 import com.techai.shiftme.data.model.Request;
@@ -38,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class SendRequestFragment extends Fragment implements View.OnClickListener {
 
@@ -47,9 +53,9 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
     private List<String> itemList = new ArrayList<>();
     private String selectedVehicle;
     private FirebaseFirestore db = null;
-    private int PICK_LOCATION_REQUEST_CODE = 11, DESTINATION_LOCATION_REQUEST_CODE=21;
-    private Double pickLatitude, pickLongitude, destinationLatitude,destinationLongitude;
-    private String pickLocation,destinationLocation;
+    private int PICK_LOCATION_REQUEST_CODE = 11, DESTINATION_LOCATION_REQUEST_CODE = 21;
+    private Double pickLatitude, pickLongitude, destinationLatitude, destinationLongitude;
+    private String pickLocation, destinationLocation;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,6 +90,11 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
 
     private void saveShiftRequest(Request request) {
         AppProgressUtil.INSTANCE.showOldProgressDialog(requireContext());
+        DirectionsRoute[] directions = getDirections(new LatLng(request.getPickLatitude(), request.getPickLongitude()),
+                new LatLng(request.getDestinationLatitude(), request.getDestinationLongitude()));
+        request.setDistance(directions[0].legs[0].distance.humanReadable);
+        request.setCostOfShifting((getCostOfShifting(request) *
+                Double.parseDouble(directions[0].legs[0].distance.humanReadable.split(" km")[0])) + "$");
         db.collection(Constants.REQUESTS)
                 .add(request)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -103,12 +114,42 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
 
     }
 
+    private int getCostOfShifting(Request request) {
+        String list[] = request.getVehicleType().split(" - ");
+        list = list[1].split("\\$");
+        return Integer.parseInt(list[0]);
+    }
+
+    private GeoApiContext getGeoContext() {
+        GeoApiContext geoApiContext = new GeoApiContext();
+        return geoApiContext.setQueryRateLimit(3)
+                .setApiKey(getString(R.string.maps_api_key))
+                .setConnectTimeout(1, TimeUnit.SECONDS)
+                .setReadTimeout(1, TimeUnit.SECONDS)
+                .setWriteTimeout(1, TimeUnit.SECONDS);
+    }
+
+    private DirectionsRoute[] getDirections(LatLng origin, LatLng destination) {
+        com.google.maps.model.LatLng pickLatLng = new com.google.maps.model.LatLng(origin.latitude, origin.longitude);
+        com.google.maps.model.LatLng destinationLatLng = new com.google.maps.model.LatLng(destination.latitude, destination.longitude);
+        try {
+            return DirectionsApi.newRequest(getGeoContext())
+                    .mode(TravelMode.DRIVING)
+                    .origin(pickLatLng)
+                    .destination(destinationLatLng)
+                    .await();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new DirectionsRoute[0];
+    }
+
     private void setUpClickListener() {
         binding.ivAdd.setOnClickListener(this);
         binding.etDate.setOnClickListener(v -> sendRequestViewModel.openDatePicker(requireContext()));
         binding.etTime.setOnClickListener(v -> sendRequestViewModel.openTimePicker(requireContext()));
-        binding.etPicLocation.setOnClickListener(v -> startActivityForResult(new Intent(requireActivity(), MapActivity.class),PICK_LOCATION_REQUEST_CODE));
-        binding.etDestinationLocation.setOnClickListener(v -> startActivityForResult(new Intent(requireActivity(), MapActivity.class),DESTINATION_LOCATION_REQUEST_CODE));
+        binding.etPicLocation.setOnClickListener(v -> startActivityForResult(new Intent(requireActivity(), MapActivity.class), PICK_LOCATION_REQUEST_CODE));
+        binding.etDestinationLocation.setOnClickListener(v -> startActivityForResult(new Intent(requireActivity(), MapActivity.class), DESTINATION_LOCATION_REQUEST_CODE));
     }
 
     @Override
@@ -116,15 +157,15 @@ public class SendRequestFragment extends Fragment implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_LOCATION_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // get the location from intent
-            if(data.getExtras()!=null && data.hasExtra(Constants.MAP_ADDRESS)){
-                pickLocation= data.getExtras().getString(Constants.MAP_ADDRESS);
+            if (data.getExtras() != null && data.hasExtra(Constants.MAP_ADDRESS)) {
+                pickLocation = data.getExtras().getString(Constants.MAP_ADDRESS);
                 pickLatitude = data.getExtras().getDouble(Constants.LOCATION_LATITUDE);
                 pickLongitude = data.getExtras().getDouble(Constants.LOCATION_LONGITUDE);
                 sendRequestViewModel.setPickLocation(pickLocation, pickLatitude, pickLongitude);
             }
         } else if (requestCode == DESTINATION_LOCATION_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // get the location from intent
-            if(data.getExtras()!=null && data.hasExtra(Constants.MAP_ADDRESS)){
+            if (data.getExtras() != null && data.hasExtra(Constants.MAP_ADDRESS)) {
                 destinationLocation = data.getExtras().getString(Constants.MAP_ADDRESS);
                 destinationLatitude = data.getExtras().getDouble(Constants.LOCATION_LATITUDE);
                 destinationLongitude = data.getExtras().getDouble(Constants.LOCATION_LONGITUDE);
