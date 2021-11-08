@@ -19,8 +19,6 @@ public final class AppBinding {
 
         if (view != null) {
             CharSequence var2 = (CharSequence)errorMessage;
-            boolean var3 = false;
-            boolean var4 = false;
             view.setErrorEnabled(var2 != null && var2.length() != 0);
         }
 

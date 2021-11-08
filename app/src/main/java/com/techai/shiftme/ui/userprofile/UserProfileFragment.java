@@ -110,7 +110,7 @@ public class UserProfileFragment extends Fragment {
         if (requireActivity() instanceof CustomerActivity) {
             ((CustomerActivity) requireActivity()).showToolbarMenu(false);
         } else if (requireActivity() instanceof AgencyActivity) {
-            ((AgencyActivity) requireActivity()).showToolbarMenu(true);
+            ((AgencyActivity) requireActivity()).showToolbarMenu(false);
         }
         super.onDestroy();
     }
